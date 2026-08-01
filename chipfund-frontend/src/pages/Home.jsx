@@ -9,7 +9,9 @@ const Home = () => {
   return (
     <div >
       <div>
-        <Button onClick={() => setIsAddEmployeeModalOpen(true)}>Default</Button>
+        <Button variant="secondary" onClick={() => setIsAddEmployeeModalOpen(true)}>
+          Default
+        </Button>
       </div>
 
       <div className="mt-4">

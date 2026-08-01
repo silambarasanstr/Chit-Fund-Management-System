@@ -10,11 +10,14 @@ const buttonVariants = cva(
         primary: "bg-blue-600 text-white hover:bg-blue-700",
         secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300",
         outline: "border border-gray-300 bg-transparent hover:bg-gray-100",
+        warning: "bg-yellow-500 text-white hover:bg-yellow-600",
+        success: "bg-green-600 text-white hover:bg-green-700",
+        danger: "bg-red-600 text-white hover:bg-red-700",
       },
       size: {
-        sm: "h-8 px-3 text-sm",
-        md: "h-10 px-4 text-base",
-        lg: "h-12 px-6 text-lg",
+        sm: "px-3 py-1.5 text-sm",
+        md: "px-4 py-2 text-sm",
+        lg: "px-5 py-2.5 text-base",
       },
     },
     defaultVariants: {

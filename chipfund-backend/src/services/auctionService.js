@@ -8,14 +8,14 @@ export const getAuctions = async () => {
   return await Auction.find()
     .populate("chitGroup", "groupName")
     .populate("installment", "installmentNo")
-    .populate("winner", "memberCode fullName");
+    .populate("winner", "memberId name");
 };
 
 export const getAuctionById = async (id) => {
   return await Auction.findById(id)
     .populate("chitGroup", "groupName")
     .populate("installment", "installmentNo")
-    .populate("winner", "memberCode fullName");
+    .populate("winner", "memberId name");
 };
 
 export const updateAuction = async (id, data) => {

@@ -12,11 +12,17 @@ import {
 const router = express.Router();
 
 router.post("/", createGroupMember);
+
 router.get("/", getAllGroupMembers);
-router.get("/:id", getGroupMemberById);
-router.put("/:id", updateGroupMember);
-router.delete("/:id", deleteGroupMember);
+
 router.get("/group/:groupId", getMembersByGroup);
+
 router.get("/member/:memberId", getGroupsByMember);
+
+router.get("/:id", getGroupMemberById);
+
+router.put("/:id", updateGroupMember);
+
+router.delete("/:id", deleteGroupMember);
 
 export default router;

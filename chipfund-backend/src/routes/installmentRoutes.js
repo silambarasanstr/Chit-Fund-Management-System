@@ -19,7 +19,7 @@ router.use(authMiddleware);
 router.post("/", authorizeRoles("admin"), createInstallment);
 router.put("/:id", authorizeRoles("admin"), updateInstallment);
 router.delete("/:id", authorizeRoles("admin"), deleteInstallment);
-router.patch("/:id/pay", authorizeRoles("admin"), payInstallment);
+router.post("/:id/pay", authorizeRoles("admin"), payInstallment);
 
 // Admin & Member
 router.get("/", getInstallments);

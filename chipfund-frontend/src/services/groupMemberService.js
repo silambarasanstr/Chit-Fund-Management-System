@@ -29,3 +29,20 @@ export const deleteGroupMember = async (id) => {
   console.log(response.data);
   return response.data;
 };
+
+export const getMembersByGroup = async (groupId) => {
+  const response = await api.get(`/group-members/group/${groupId}`);
+
+  console.log("Group Members:", response.data);
+
+  return response.data;
+};
+
+
+export const getGroupsByMember = async (memberId) => {
+  const response = await api.get(`/group-members/member/${memberId}`);
+
+  console.log("Member Groups:", response.data);
+
+  return response.data;
+};

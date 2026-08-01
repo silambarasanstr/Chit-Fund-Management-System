@@ -39,6 +39,13 @@ const userSchema = new mongoose.Schema(
       default: "member",
     },
 
+    // 👇 Add this
+    member: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Member",
+      default: null,
+    },
+
     isActive: {
       type: Boolean,
       default: true,

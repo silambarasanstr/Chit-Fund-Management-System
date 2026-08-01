@@ -94,14 +94,14 @@ export const deleteGroupMember = async (req, res) => {
 // Members By Group
 export const getMembersByGroup = async (req, res) => {
   try {
-    const data = await groupMemberService.getMembersByGroup(
+    const members = await groupMemberService.getMembersByGroup(
       req.params.groupId
     );
 
-    res.json({
+    res.status(200).json({
       success: true,
-      count: data.length,
-      data,
+      count: members.length,
+      data: members,
     });
   } catch (error) {
     res.status(500).json({
@@ -114,14 +114,14 @@ export const getMembersByGroup = async (req, res) => {
 // Groups By Member
 export const getGroupsByMember = async (req, res) => {
   try {
-    const data = await groupMemberService.getGroupsByMember(
+    const groups = await groupMemberService.getGroupsByMember(
       req.params.memberId
     );
 
-    res.json({
+    res.status(200).json({
       success: true,
-      count: data.length,
-      data,
+      count: groups.length,
+      data: groups,
     });
   } catch (error) {
     res.status(500).json({

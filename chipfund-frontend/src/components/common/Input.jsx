@@ -14,7 +14,7 @@ const Input = ({
   ...props
 }) => {
   return (
-    <div className="mb-4">
+    <div className="mb-2">
       {label && (
         <label
           htmlFor={name}
@@ -33,7 +33,7 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
-        className={`w-full rounded-lg border px-3 py-2 outline-none transition
+        className={`w-full rounded border px-3 py-2 outline-none transition
           ${
             error
               ? "border-red-500 focus:ring-2 focus:ring-red-300"

@@ -5,7 +5,6 @@ import Profile from "../pages/Profile";
 import Employees from "../pages/Employees";
 import Dashboard from "../admin/Dashboard";
 import AdminLayout from "../components/admin/AdminLayout";
-import Settings from "../admin/Settings";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import Members from "../admin/Members";
@@ -15,7 +14,10 @@ import Installments from "../admin/Installments";
 import Auctions from "../admin/Auctions";
 import Bids from "../admin/Bids";
 import Payments from "../admin/Payments";
-import Reports from "../admin/Reports";
+
+import MyGroups from "../member/MyGroups";
+import MyInstallments from "../member/MyInstallments";
+import MyPayments from "../member/MyPayments";
 
 const AppRoutes = () => {
   return (
@@ -35,9 +37,12 @@ const AppRoutes = () => {
           <Route path="auctions" element={<Auctions />} />
           <Route path="bids" element={<Bids />} />
           <Route path="payments" element={<Payments />} />
-          <Route path="reports" element={<Reports />} />
           <Route path="employees" element={<Employees />} />
-          <Route path="settings" element={<Settings />} />
+
+          {/* Member */}
+          <Route path="my-groups" element={<MyGroups />} />
+          <Route path="my-installments" element={<MyInstallments />} />
+          <Route path="my-payments" element={<MyPayments />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

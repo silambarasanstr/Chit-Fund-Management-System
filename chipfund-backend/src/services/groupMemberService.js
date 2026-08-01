@@ -77,14 +77,10 @@ export const getGroupMemberById = async (id) => {
 // Update
 // ===============================
 export const updateGroupMember = async (id, data) => {
-  const groupMember = await GroupMember.findByIdAndUpdate(
-    id,
-    data,
-    {
-      new: true,
-      runValidators: true,
-    }
-  )
+  const groupMember = await GroupMember.findByIdAndUpdate(id, data, {
+    new: true,
+    runValidators: true,
+  })
     .populate("member", "name phone email")
     .populate("chitGroup", "groupName chitAmount");
 
@@ -114,14 +110,32 @@ export const deleteGroupMember = async (id) => {
 export const getMembersByGroup = async (groupId) => {
   return await GroupMember.find({
     chitGroup: groupId,
-  }).populate("member", "name phone email");
+  }).populate("member", "memberId name phone email");
 };
 
 // ===============================
 // Get Groups By Member
 // ===============================
+// export const getGroupsByMember = async (memberId) => {
+//   return await GroupMember.find({
+//     member: memberId,
+//   }).populate("chitGroup", "groupName chitAmount");
+// };
+
+
 export const getGroupsByMember = async (memberId) => {
-  return await GroupMember.find({
+
+  const groups = await GroupMember.find({
     member: memberId,
-  }).populate("chitGroup", "groupName chitAmount");
+  })
+    .populate("member", "name memberId phone")
+    .populate(
+      "chitGroup",
+      "groupName chitAmount duration status"
+    );
+
+  console.log("Member ID:", memberId);
+  console.log("Groups Found:", groups);
+
+  return groups;
 };

@@ -1,7 +1,15 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../features/auth/authSlice";
 import Input from "../components/common/Input";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { loading, error } = useSelector((state) => state.auth);
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -10,31 +18,35 @@ export default function Login() {
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
 
-    setErrors({
-      ...errors,
+    setErrors((prev) => ({
+      ...prev,
       [e.target.name]: "",
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let newErrors = {};
+    const newErrors = {};
 
     if (!form.email) newErrors.email = "Email is required";
     if (!form.password) newErrors.password = "Password is required";
 
-    if (Object.keys(newErrors).length) {
+    if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    console.log(form);
+    const result = await dispatch(loginUser(form));
+
+    if (loginUser.fulfilled.match(result)) {
+      navigate("/admin", { replace: true });
+    }
   };
 
   return (
@@ -49,25 +61,26 @@ export default function Login() {
             value={form.email}
             onChange={handleChange}
             error={errors.email}
-            required
           />
 
           <Input
             label="Password"
             type="password"
             name="password"
-            placeholder="Enter password"
+            placeholder="Enter your password"
             value={form.password}
             onChange={handleChange}
             error={errors.password}
-            required
           />
+
+          {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
 
           <button
             type="submit"
-            className="w-full py-2 mt-4 text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
+            disabled={loading}
+            className="w-full py-2 mt-4 text-white transition bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50"
           >
-            Register
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

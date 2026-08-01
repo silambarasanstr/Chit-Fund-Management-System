@@ -19,3 +19,18 @@ export const deleteMember = async (id) => {
   const response = await api.delete(`/members/${id}`);
   return response.data;
 };
+
+export const bulkDeleteMembers = async (ids) => {
+  const response = await api.delete("/members/bulk-delete", {
+    data: {
+      ids,
+    },
+  });
+
+  return response.data;
+};
+
+export const bulkCreateMembers = async (members) => {
+  const response = await api.post("/members/bulk-import", members);
+  return response.data;
+};

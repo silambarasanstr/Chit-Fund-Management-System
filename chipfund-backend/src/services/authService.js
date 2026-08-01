@@ -26,6 +26,7 @@ export const registerUser = async ({ name, email, password, phone, role }) => {
   return {
     user: {
       id: user._id,
+      member: user.member,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -74,7 +75,9 @@ export const loginUser = async ({ email, password }) => {
 // Get Current User
 // ===============================
 export const getCurrentUser = async (userId) => {
-  const user = await User.findById(userId).select("-password");
+  const user = await User.findById(userId)
+    .populate("member")
+    .select("-password");
 
   if (!user) {
     throw new Error("User not found");

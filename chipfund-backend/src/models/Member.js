@@ -65,6 +65,25 @@ const memberSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
+    // ==========================
+    // Soft Delete Fields
+    // ==========================
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
   },
   {
     timestamps: true,

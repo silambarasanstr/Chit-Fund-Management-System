@@ -1,6 +1,7 @@
 import * as memberService from "../services/memberService.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "../constants/messages.js";
+import asyncHandler from "express-async-handler";
 
 // ===============================
 // Create Member
@@ -106,7 +107,7 @@ export const updateMember = async (req, res) => {
 // ===============================
 export const deleteMember = async (req, res) => {
   try {
-    const member = await memberService.deleteMember(req.params.id);
+    const member = await memberService.deleteMember(req.params.id, req.user.id);
 
     if (!member) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -127,3 +128,25 @@ export const deleteMember = async (req, res) => {
     });
   }
 };
+
+export const bulkDeleteMembers = asyncHandler(async (req, res) => {
+  const { ids } = req.body;
+
+  const result = await memberService.bulkDeleteMembers(ids, req.user.id);
+
+  res.status(200).json({
+    success: true,
+    message: `${result.modifiedCount} members deleted successfully.`,
+    data: result,
+  });
+});
+
+export const importMembers = asyncHandler(async (req, res) => {
+  const result = await memberService.bulkCreateMembers(req.body, req.user.id);
+
+  res.status(201).json({
+    success: true,
+    message: "Members imported successfully",
+    ...result,
+  });
+});
