@@ -101,15 +101,10 @@ export default function InstallmentList({
                       </Button>
 
                       <Button
-                        variant={
-                          item.status === "Paid" ? "secondary" : "success"
-                        }
-                        size="sm"
-                        onClick={() => onPay(item._id)}
-                        disabled={item.status === "Paid"}
+                        variant="success"
+                        onClick={() => onPay(item)}
                       >
-                        <CreditCard className="w-4 h-4 mr-2" />
-                        {item.status === "Paid" ? "Paid" : "Pay"}
+                        Pay
                       </Button>
 
                       <Button

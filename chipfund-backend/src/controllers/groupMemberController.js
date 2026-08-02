@@ -1,7 +1,7 @@
 import * as groupMemberService from "../services/groupMemberService.js";
 
 // Create
-export const createGroupMember = async (req, res) => {
+export const createGroupMember = async (req, res, next) => {
   try {
     const groupMember = await groupMemberService.createGroupMember(req.body);
 
@@ -11,54 +11,46 @@ export const createGroupMember = async (req, res) => {
       data: groupMember,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
 // Get All
-export const getAllGroupMembers = async (req, res) => {
+export const getAllGroupMembers = async (req, res, next) => {
   try {
-    const data = await groupMemberService.getAllGroupMembers();
-
+    const groupMembers = await groupMemberService.getAllGroupMembers();
     res.json({
       success: true,
-      count: data.length,
-      data,
+      count: groupMembers.length,
+      data: groupMembers,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
 // Get One
-export const getGroupMemberById = async (req, res) => {
+export const getGroupMemberById = async (req, res, next) => {
   try {
-    const data = await groupMemberService.getGroupMemberById(req.params.id);
+    const groupMember = await groupMemberService.getGroupMemberById(
+      req.params.id,
+    );
 
-    res.json({
+    res.status(200).json({
       success: true,
-      data,
+      data: groupMember,
     });
   } catch (error) {
-    res.status(404).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
 // Update
-export const updateGroupMember = async (req, res) => {
+export const updateGroupMember = async (req, res, next) => {
   try {
     const data = await groupMemberService.updateGroupMember(
       req.params.id,
-      req.body
+      req.body,
     );
 
     res.json({
@@ -67,15 +59,12 @@ export const updateGroupMember = async (req, res) => {
       data,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
 // Delete
-export const deleteGroupMember = async (req, res) => {
+export const deleteGroupMember = async (req, res, next) => {
   try {
     await groupMemberService.deleteGroupMember(req.params.id);
 
@@ -84,18 +73,15 @@ export const deleteGroupMember = async (req, res) => {
       message: "Group Member deleted successfully",
     });
   } catch (error) {
-    res.status(404).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
 // Members By Group
-export const getMembersByGroup = async (req, res) => {
+export const getMembersByGroup = async (req, res, next) => {
   try {
     const members = await groupMemberService.getMembersByGroup(
-      req.params.groupId
+      req.params.groupId,
     );
 
     res.status(200).json({
@@ -104,18 +90,16 @@ export const getMembersByGroup = async (req, res) => {
       data: members,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };
 
 // Groups By Member
-export const getGroupsByMember = async (req, res) => {
+export const getGroupsByMember = async (req, res, next) => {
+  console.log("Member ID:", req.params.memberId);
   try {
     const groups = await groupMemberService.getGroupsByMember(
-      req.params.memberId
+      req.params.memberId,
     );
 
     res.status(200).json({
@@ -124,9 +108,6 @@ export const getGroupsByMember = async (req, res) => {
       data: groups,
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    next(error);
   }
 };

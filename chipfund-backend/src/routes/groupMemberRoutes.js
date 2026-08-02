@@ -1,4 +1,5 @@
 import express from "express";
+import { validateGroupMember } from "../validators/groupMemberValidator.js";
 import {
   createGroupMember,
   getAllGroupMembers,
@@ -11,7 +12,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createGroupMember);
+router.post("/", validateGroupMember, createGroupMember);
 
 router.get("/", getAllGroupMembers);
 

@@ -64,15 +64,17 @@ export default function GroupMemberList({
               groupMembers.map((item) => (
                 <tr key={item._id} className="transition hover:bg-blue-50/40">
                   <td className="px-4 py-3 text-gray-700">
-                    {item.chitGroup.groupName}
+                    {item.chitGroup?.groupName || "-"}
                   </td>
 
                   <td className="px-4 py-3 text-gray-700">
                     {item.member?.name}
                   </td>
 
-                  <td className="px-4 py-3 text-gray-700">
-                    {new Date(item.joinDate).toLocaleDateString()}
+                  <td className="px-4 py-3">
+                    {item.joinDate
+                      ? new Date(item.joinDate).toLocaleDateString("en-GB")
+                      : "-"}
                   </td>
 
                   <td className="px-4 py-3">

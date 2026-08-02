@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getGroupMembers } from "../services/groupMemberService";
+import {
+  getGroupMembers,
+  getMembersByGroup,
+} from "../services/groupMemberService";
+
+import { getChitGroups } from "../services/chitGroupService";
+
 import GroupMemberList from "../components/groupmembers/GroupMemberList";
 import GroupMemberForm from "../components/groupmembers/GroupMemberForm";
 import Button from "../components/common/Button";
+import StatusFilter from "../components/common/StatusFilter";
 
 export default function GroupMembers() {
   const [groupMembers, setGroupMembers] = useState([]);
+  const [chitGroups, setChitGroups] = useState([]);
+  
   const [loading, setLoading] = useState(false);
 
   const [isAddGroupModalOpen, setIsAddGroupModalOpen] = useState(false);
   const [editingData, setEditingData] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState("");
 
   const fetchGroupMembers = async () => {
     try {
@@ -28,8 +38,38 @@ export default function GroupMembers() {
     }
   };
 
+  const handleGroupChange = async (groupId) => {
+    setSelectedGroup(groupId);
+
+    try {
+      if (!groupId) {
+        await fetchGroupMembers();
+        return;
+      }
+
+      const res = await getMembersByGroup(groupId);
+      setGroupMembers(res?.data?.data || res?.data || []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchChitGroups = async () => {
+    try {
+      const res = await getChitGroups();
+      setChitGroups(res?.data?.data || res?.data || []);
+    } catch (error) {
+      console.error("Fetch Chit Groups Error:", error);
+      toast.error(
+        error?.response?.data?.message || "Failed to fetch chit groups",
+      );
+      setChitGroups([]);
+    }
+  };
+
   useEffect(() => {
     fetchGroupMembers();
+    fetchChitGroups();
   }, []);
 
   const handleEdit = (member) => {
@@ -41,6 +81,11 @@ export default function GroupMembers() {
     setIsAddGroupModalOpen(false);
     setEditingData(null);
   };
+
+  const groupOptions = chitGroups.map((group) => ({
+    value: group._id,
+    label: group.groupName,
+  }));
 
   return (
     <div className="p-6">
@@ -59,11 +104,20 @@ export default function GroupMembers() {
               setEditingData(null);
               setIsAddGroupModalOpen(true);
             }}
-            className="px-4 py-2 text-white bg-blue-600 rounded-lg"
+            
           >
             + Add Group Member
           </Button>
         </div>
+      </div>
+
+      <div className="flex flex-col gap-3 mb-4 lg:flex-row lg:items-center lg:justify-between">
+        <StatusFilter
+          label="Chit Group"
+          value={selectedGroup}
+          options={groupOptions}
+          onChange={handleGroupChange}
+        />
       </div>
 
       <GroupMemberList

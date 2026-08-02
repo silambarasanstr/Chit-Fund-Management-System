@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import Button from "../components/common/Button";
 import InstallmentForm from "../components/installments/InstallmentForm";
 import InstallmentList from "../components/installments/InstallmentList";
+import PayInstallmentForm from "../components/installments/PayInstallmentForm";
 
 import {
   getInstallments,
@@ -16,6 +17,9 @@ export default function Installments() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+
+  const [isPayOpen, setIsPayOpen] = useState(false);
+  const [selectedInstallment, setSelectedInstallment] = useState(null);
 
   const fetchInstallments = async () => {
     try {
@@ -61,17 +65,29 @@ export default function Installments() {
     }
   };
 
-  const handlePay = async (id) => {
-    try {
-      await payInstallment(id);
-
-      toast.success("Installment paid successfully");
-
-      fetchInstallments();
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Payment failed");
-    }
+  const handlePay = (installment) => {
+    setSelectedInstallment(installment);
+    setIsPayOpen(true);
   };
+
+  const handleConfirmPayment = async () => {
+  if (!selectedInstallment) return;
+
+  try {
+    await payInstallment(selectedInstallment._id);
+
+    toast.success("Installment paid successfully");
+
+    setIsPayOpen(false);
+    setSelectedInstallment(null);
+
+    await fetchInstallments();
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Payment failed"
+    );
+  }
+};
 
   const handleFormClose = () => {
     setIsOpen(false);
@@ -105,6 +121,16 @@ export default function Installments() {
         onClose={handleFormClose}
         editData={editData}
         onSuccess={fetchInstallments}
+      />
+
+      <PayInstallmentForm
+        isOpen={isPayOpen}
+        onClose={() => {
+          setIsPayOpen(false);
+          setSelectedInstallment(null);
+        }}
+        installment={selectedInstallment}
+        onConfirm={handleConfirmPayment}
       />
     </div>
   );

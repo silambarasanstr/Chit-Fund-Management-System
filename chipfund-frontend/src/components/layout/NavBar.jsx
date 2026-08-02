@@ -2,26 +2,30 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   const linkClass = ({ isActive }) =>
-    isActive ? "text-blue-600 font-semibold" : "text-gray-500 hover:text-black";
+    `px-3 py-2 rounded-md transition-colors duration-200 ${
+      isActive
+        ? "bg-blue-50 text-blue-600 font-semibold"
+        : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
+    }`;
 
   return (
-    <div className="bg-white shadow ">
-      <div className="container mx-auto p-5 ">
-        <nav className="space-x-6  ">
+    <header className="bg-white border-b shadow-sm">
+      <div className="container flex items-center justify-end px-5 py-4 mx-auto">
+        <nav className="flex items-center gap-2">
           <NavLink to="/" end className={linkClass}>
             Home
           </NavLink>
 
-          <NavLink to="/about" className={linkClass}>
-            About
+          <NavLink to="/features" className={linkClass}>
+            Features
           </NavLink>
 
-          <NavLink to="/profile" className={linkClass}>
-            Profile
+          <NavLink to="/login" className={linkClass}>
+            Login
           </NavLink>
         </nav>
       </div>
-    </div>
+    </header>
   );
 };
 

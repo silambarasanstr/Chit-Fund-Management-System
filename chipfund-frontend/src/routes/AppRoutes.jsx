@@ -18,6 +18,7 @@ import Payments from "../admin/Payments";
 import MyGroups from "../member/MyGroups";
 import MyInstallments from "../member/MyInstallments";
 import MyPayments from "../member/MyPayments";
+import Features from "../pages/Features";
 
 const AppRoutes = () => {
   return (
@@ -25,7 +26,7 @@ const AppRoutes = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/features" element={<Features />} />
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
