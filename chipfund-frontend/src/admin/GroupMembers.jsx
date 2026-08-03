@@ -87,6 +87,9 @@ export default function GroupMembers() {
     label: group.groupName,
   }));
 
+  console.log(groupMembers)
+  console.log(chitGroups)
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">

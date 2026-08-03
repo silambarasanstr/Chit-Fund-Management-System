@@ -17,6 +17,7 @@ import RefreshButton from "../components/common/RefreshButton";
 import RowsPerPage from "../components/common/RowsPerPage";
 import SearchBox from "../components/common/SearchBox";
 import StatusFilter from "../components/common/StatusFilter";
+import PageHeader from "../components/common/PageHeader";
 
 // 5. Feature Components
 import MemberForm from "../components/members/MemberForm";
@@ -47,9 +48,7 @@ const Members = () => {
       setMembers(res?.data?.data || res?.data || []);
     } catch (error) {
       console.error("Fetch Members Error:", error);
-      toast.error(
-        error?.response?.data?.message || "Failed to fetch members"
-      );
+      toast.error(error?.response?.data?.message || "Failed to fetch members");
       setMembers([]);
     } finally {
       setLoading(false);
@@ -94,58 +93,51 @@ const Members = () => {
     }
   }, [currentPage, totalPages]);
 
-  
   // Event Handlers
- 
+
   const handleAdd = () => {
     setEditingData(null);
     setIsOpen(true);
   };
- 
+
   const handleEdit = (member) => {
     setEditingData(member);
     setIsOpen(true);
   };
-  
+
   const handleView = (member) => {
     setViewingData(member);
     setIsViewModalOpen(true);
   };
+
   const handleFormClose = () => {
     setIsOpen(false);
     setEditingData(null);
   };
- 
+
   const handleViewClose = () => {
     setIsViewModalOpen(false);
     setViewingData(null);
   };
-  
+
   const handleRefresh = async () => {
     await fetchMembers();
     toast.success("Members refreshed");
   };
 
+
+  
   return (
     <div className="min-h-screen p-6 bg-slate-100">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">Members</h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Manage your members here.
-          </p>
-        </div>
-
+      <PageHeader title="Members" subtitle="Manage your members here.">
         <div className="flex gap-3">
           <ImportButton refresh={fetchMembers} />
-
           <ExportButton data={filteredMembers} fileName="Members" />
-
           <Button variant="primary" onClick={handleAdd}>
             + Add Member
           </Button>
         </div>
-      </div>
+      </PageHeader>
 
       <div className="flex flex-col gap-3 mb-4 lg:flex-row lg:items-center lg:justify-between">
         {/* Left */}
@@ -210,7 +202,7 @@ const Members = () => {
         member={viewingData}
       />
 
-      <div className="flex flex-col items-center justify-between md:flex-row">
+      <div className="flex flex-col items-center justify-between mt-5 md:flex-row">
         <RowsPerPage value={itemsPerPage} onChange={setItemsPerPage} />
 
         <Pagination

@@ -1,6 +1,7 @@
 import * as paymentService from "../services/paymentService.js";
 
 export const createPayment = async (req, res) => {
+  console.log(req.body,"===>xxxcreatePayment");
   try {
     const payment = await paymentService.createPayment(req.body);
 
@@ -18,6 +19,7 @@ export const createPayment = async (req, res) => {
 };
 
 export const getPayments = async (req, res) => {
+  console.log( req.query,"===>getPayments");
   try {
     const payments = await paymentService.getPayments();
 
@@ -106,3 +108,26 @@ export const deletePayment = async (req, res) => {
     });
   }
 };
+
+
+
+
+export const getMyPayments = async (req, res) => {
+  console.log(req.user.id,"===>userIdPayment2");
+  try {
+    const payments = await paymentService.getMyPaymentsService(req.user.id);
+
+    res.status(200).json({
+      success: true,
+      count: payments.length,
+      data: payments,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+

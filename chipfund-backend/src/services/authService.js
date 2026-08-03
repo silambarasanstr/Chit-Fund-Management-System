@@ -85,3 +85,16 @@ export const getCurrentUser = async (userId) => {
 
   return user;
 };
+
+
+export const getUsers = async (role) => {
+  const filter = {};
+
+  if (role) {
+    filter.role = role;
+  }
+
+  return await User.find(filter)
+    .select("name email member")
+    .sort({ name: 1 });
+};

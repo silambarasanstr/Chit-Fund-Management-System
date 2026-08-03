@@ -71,9 +71,7 @@ export default function Login() {
             Chit Fund Management
           </h1>
 
-          <p className="mt-1 text-xs text-gray-500">
-            Login to your account
-          </p>
+          <p className="mt-1 text-xs text-gray-500">Login to your account</p>
         </div>
 
         {/* Form */}
@@ -120,27 +118,19 @@ export default function Login() {
               Quick Login
             </p>
 
-            <span className="text-[11px] text-gray-400">
-              Click to autofill
-            </span>
+            <span className="text-[11px] text-gray-400">Click to autofill</span>
           </div>
 
           <div className="space-y-2">
             {/* Admin */}
             <button
               type="button"
-              onClick={() =>
-                fillCredentials("admin@example.com", "123456")
-              }
+              onClick={() => fillCredentials("admin@example.com", "123456")}
               className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-2.5 transition hover:border-blue-500 hover:bg-blue-50"
             >
               <div className="text-left">
-                <p className="text-sm font-semibold text-gray-800">
-                  👨‍💼 Admin
-                </p>
-                <p className="text-[11px] text-gray-500">
-                  admin@example.com
-                </p>
+                <p className="text-sm font-semibold text-gray-800">👨‍💼 Admin</p>
+                <p className="text-[11px] text-gray-500">admin@example.com</p>
               </div>
 
               <span className="rounded bg-blue-100 px-2 py-1 text-[10px] font-semibold text-blue-700">
@@ -151,18 +141,12 @@ export default function Login() {
             {/* Member */}
             <button
               type="button"
-              onClick={() =>
-                fillCredentials("suresh@gmail.com", "123456")
-              }
+              onClick={() => fillCredentials("member@example.com", "123456")}
               className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-2.5 transition hover:border-green-500 hover:bg-green-50"
             >
               <div className="text-left">
-                <p className="text-sm font-semibold text-gray-800">
-                  👤 Member
-                </p>
-                <p className="text-[11px] text-gray-500">
-                  suresh@gmail.com
-                </p>
+                <p className="text-sm font-semibold text-gray-800">👤 Member</p>
+                <p className="text-[11px] text-gray-500">member@example.com</p>
               </div>
 
               <span className="rounded bg-green-100 px-2 py-1 text-[10px] font-semibold text-green-700">

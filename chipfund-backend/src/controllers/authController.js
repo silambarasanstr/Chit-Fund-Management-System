@@ -15,9 +15,6 @@ export const register = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Login User
-// @route   POST /api/auth/login
-// @access  Public
 export const login = asyncHandler(async (req, res) => {
   const result = await authService.loginUser(req.body);
 
@@ -29,14 +26,20 @@ export const login = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get Current Logged In User
-// @route   GET /api/auth/me
-// @access  Private
 export const getCurrentUser = asyncHandler(async (req, res) => {
   const user = await authService.getCurrentUser(req.user.id);
 
   res.status(200).json({
     success: true,
     data: user,
+  });
+});
+
+export const getUsers = asyncHandler(async (req, res) => {
+  const users = await authService.getUsers(req.query.role);
+
+  res.status(200).json({
+    success: true,
+    data: users,
   });
 });

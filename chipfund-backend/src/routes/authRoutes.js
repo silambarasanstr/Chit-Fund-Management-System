@@ -3,6 +3,7 @@ import {
   register,
   login,
   getCurrentUser,
+  getUsers,
 } from "../controllers/authController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -15,5 +16,8 @@ router.post("/login", login);
 
 // Private Route
 router.get("/me", authMiddleware, getCurrentUser);
+
+// Get Users (Admin Only)
+router.get("/users",  getUsers);
 
 export default router;

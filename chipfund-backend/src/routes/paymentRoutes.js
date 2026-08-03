@@ -5,6 +5,7 @@ import {
   getPaymentById,
   updatePayment,
   deletePayment,
+  getMyPayments,
 } from "../controllers/paymentController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -12,6 +13,13 @@ import authMiddleware from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.use(authMiddleware);
+
+
+
+// Member
+router.get("/my-payments", getMyPayments);
+
+
 
 router.post("/", createPayment);
 

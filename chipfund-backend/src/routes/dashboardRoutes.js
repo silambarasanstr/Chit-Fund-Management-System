@@ -4,8 +4,6 @@ import authMiddleware from "../middleware/authMiddleware.js";
 import authorizeRoles from "../middleware/authorizeRoles.js";
 
 const router = express.Router();
-
-// router.get("/", authMiddleware, authorizeRoles("admin"), getDashboard);
 router.get("/", getDashboard);
 
 export default router;

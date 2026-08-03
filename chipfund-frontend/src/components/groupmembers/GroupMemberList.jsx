@@ -30,6 +30,8 @@ export default function GroupMemberList({
     }
   };
 
+  console.log(groupMembers);
+
   return (
     <div className="p-5 overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
       <div className="overflow-x-auto border rounded-xl">
@@ -72,9 +74,7 @@ export default function GroupMemberList({
                   </td>
 
                   <td className="px-4 py-3">
-                    {item.joinDate
-                      ? new Date(item.joinDate).toLocaleDateString("en-GB")
-                      : "-"}
+                    {new Date(item.joinedDate).toLocaleDateString("en-IN")}
                   </td>
 
                   <td className="px-4 py-3">

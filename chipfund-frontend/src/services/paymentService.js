@@ -28,3 +28,11 @@ export const deletePayment = async (id) => {
   const response = await api.delete(`/payments/${id}`);
   return response.data;
 };
+
+
+export const getMyPayments = async () => {
+  console.log("Fetching my payments...");
+  const response = await api.get("/payments/my-payments");
+  console.log(response.data);
+  return response.data;
+};

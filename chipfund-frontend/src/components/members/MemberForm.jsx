@@ -4,8 +4,10 @@ import Input from "../common/Input";
 import Modal from "../common/Modal";
 import Button from "../common/Button";
 import { updateMember, createMember } from "../../services/memberService";
+import { getUsers } from "../../features/auth/authService";
 
 const initialState = {
+  user: "",
   memberId: "",
   name: "",
   email: "",
@@ -16,7 +18,20 @@ const initialState = {
 
 const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
   const [form, setForm] = useState(initialState);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      const res = await getUsers();
+      const availableUsers = res.data.filter((user) => !user.member);
+      setUsers(availableUsers);
+    };
+
+    if (isOpen) {
+      loadUsers();
+    }
+  }, [isOpen]);
 
   const handleChange = (e) => {
     setForm({
@@ -45,7 +60,8 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
       onClose();
     } catch (error) {
       console.error(error);
-      toast.error("Error saving member");
+
+      toast.error(error.response?.data?.message || "Error saving member");
     } finally {
       setLoading(false);
     }
@@ -59,6 +75,7 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
   useEffect(() => {
     if (editData) {
       setForm({
+        user: editData.user?._id || editData.user || "",
         memberId: editData.memberId || "",
         name: editData.name || "",
         email: editData.email || "",
@@ -82,6 +99,21 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
     >
       <form onSubmit={handleSubmit} className="space-y-2">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <select
+            name="user"
+            value={form.user}
+            onChange={handleChange}
+            className="w-full px-3 py-2 transition border border-gray-300 rounded outline-none md:col-span-2"
+          >
+            <option value="">Select User</option>
+
+            {users.map((user) => (
+              <option key={user._id} value={user._id}>
+                {user.name} ({user.email})
+              </option>
+            ))}
+          </select>
+
           <Input
             label="Member ID"
             name="memberId"

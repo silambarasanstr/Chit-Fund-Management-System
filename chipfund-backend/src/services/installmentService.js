@@ -1,4 +1,5 @@
 import Installment from "../models/Installment.js";
+import Member from "../models/Member.js";
 
 // Create Installment
 export const createInstallment = async (data) => {
@@ -45,4 +46,20 @@ export const payInstallment = async (id) => {
   installment.status = "Paid";
 
   return await installment.save();
+};
+
+export const getMyInstallmentsService = async (userId) => {
+  console.log(userId, "===> userId");
+  const member = await Member.findOne({ user: userId });
+
+  console.log(member);
+
+  if (!member) {
+    throw new Error("Member not found");
+  }
+
+  return await Installment.find({ member: member._id })
+    .populate("group", "groupName chitAmount")
+    .populate("member", "memberId name")
+    .sort({ installmentNo: 1 });
 };

@@ -6,21 +6,12 @@ import Payment from "../models/Payment.js";
 import Auction from "../models/Auction.js";
 
 export const getDashboard = async () => {
-  const [
-    totalUsers,
-    totalMembers,
-    totalGroups,
-    totalInstallments,
-    totalPayments,
-    totalAuctions,
-  ] = await Promise.all([
-    User.countDocuments(),
-    Member.countDocuments(),
-    ChitGroup.countDocuments(),
-    Installment.countDocuments(),
-    Payment.countDocuments(),
-    Auction.countDocuments(),
-  ]);
+  const totalUsers = await User.countDocuments();
+  const totalMembers = await Member.countDocuments();
+  const totalGroups = await ChitGroup.countDocuments();
+  const totalInstallments = await Installment.countDocuments();
+  const totalPayments = await Payment.countDocuments();
+  const totalAuctions = await Auction.countDocuments();
 
   const paymentSummary = await Payment.aggregate([
     {
@@ -40,6 +31,12 @@ export const getDashboard = async () => {
     },
   ]);
 
+  const totalCollection =
+    paymentSummary.length > 0 ? paymentSummary[0].totalCollection : 0;
+
+  const totalAuctionAmount =
+    auctionSummary.length > 0 ? auctionSummary[0].totalAuctionAmount : 0;
+
   return {
     totalUsers,
     totalMembers,
@@ -47,15 +44,7 @@ export const getDashboard = async () => {
     totalInstallments,
     totalPayments,
     totalAuctions,
-
-    totalCollection:
-      paymentSummary.length > 0
-        ? paymentSummary[0].totalCollection
-        : 0,
-
-    totalAuctionAmount:
-      auctionSummary.length > 0
-        ? auctionSummary[0].totalAuctionAmount
-        : 0,
+    totalCollection,
+    totalAuctionAmount,
   };
 };

@@ -49,6 +49,7 @@ const chitGroupSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

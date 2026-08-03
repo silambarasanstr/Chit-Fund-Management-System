@@ -3,9 +3,7 @@ import { HTTP_STATUS } from "../constants/httpStatus.js";
 import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "../constants/messages.js";
 import asyncHandler from "express-async-handler";
 
-// ===============================
 // Create Member
-// ===============================
 export const createMember = async (req, res) => {
   try {
     const member = await memberService.createMember({
@@ -26,9 +24,7 @@ export const createMember = async (req, res) => {
   }
 };
 
-// ===============================
 // Get All Members
-// ===============================
 export const getMembers = async (req, res) => {
   try {
     const members = await memberService.getMembers();
@@ -47,9 +43,7 @@ export const getMembers = async (req, res) => {
   }
 };
 
-// ===============================
 // Get Single Member
-// ===============================
 export const getMemberById = async (req, res) => {
   try {
     const member = await memberService.getMemberById(req.params.id);
@@ -75,9 +69,7 @@ export const getMemberById = async (req, res) => {
   }
 };
 
-// ===============================
 // Update Member
-// ===============================
 export const updateMember = async (req, res) => {
   try {
     const member = await memberService.updateMember(req.params.id, req.body);
@@ -102,9 +94,7 @@ export const updateMember = async (req, res) => {
   }
 };
 
-// ===============================
 // Delete Member
-// ===============================
 export const deleteMember = async (req, res) => {
   try {
     const member = await memberService.deleteMember(req.params.id, req.user.id);

@@ -33,7 +33,7 @@ const installmentSchema = new mongoose.Schema(
     },
 
     paymentDate: {
-      type: Date,
+     type: Date,
     },
 
     status: {

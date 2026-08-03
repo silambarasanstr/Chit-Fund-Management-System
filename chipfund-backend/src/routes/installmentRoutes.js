@@ -6,6 +6,7 @@ import {
   updateInstallment,
   deleteInstallment,
   payInstallment,
+  getMyInstallments,
 } from "../controllers/installmentController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -23,6 +24,11 @@ router.post("/:id/pay", authorizeRoles("admin"), payInstallment);
 
 // Admin & Member
 router.get("/", getInstallments);
+
+// Logged-in member installments
+router.get("/my-installments", getMyInstallments);
+
+// Single installment
 router.get("/:id", getInstallment);
 
 export default router;

@@ -34,6 +34,7 @@ const memberMenus = [
   { name: "My Groups", icon: Wallet, href: "/admin/my-groups" },
   { name: "My Installments", icon: CalendarDays, href: "/admin/my-installments" },
   { name: "My Payments", icon: CreditCard, href: "/admin/my-payments" },
+  { name: "Profile", icon: UserRound, href: "/admin/profile" },
 ];
 
 export default function Sidebar({ mobileOpen, setMobileOpen, collapsed }) {

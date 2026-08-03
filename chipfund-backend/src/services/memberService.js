@@ -1,77 +1,29 @@
 import Member from "../models/Member.js";
 import User from "../models/User.js";
 
-// ===============================
 // Create Member
-// ===============================
 export const createMember = async (memberData) => {
-   const {
-    memberId,
-    phone,
-    aadhaarNumber,
-    email,
-    name,
-  } = memberData;
-
-  // Check Member ID
-  const existingMemberId = await Member.findOne({ memberId });
-  if (existingMemberId) {
-    throw new Error("Member ID already exists");
-  }
-
-  // Check Phone
-  const existingPhone = await Member.findOne({ phone });
-  if (existingPhone) {
-    throw new Error("Phone number already exists");
-  }
-
-  // Check Aadhaar (if provided)
-  if (aadhaarNumber) {
-    const existingAadhaar = await Member.findOne({ aadhaarNumber });
-
-    if (existingAadhaar) {
-      throw new Error("Aadhaar already exists");
-    }
-  }
-
-  // User Email
-  const existingUser = await User.findOne({ email });
-
-  if (existingUser) {
-    throw new Error("User email already exists");
-  }
-
+  // Create Member
   const member = await Member.create(memberData);
 
-  const user = await User.create({
-    name,
-    email,
-    phone,
-    password: "123456", // default password
-    role: "member",
+  // Link User -> Member
+  await User.findByIdAndUpdate(memberData.user, {
     member: member._id,
   });
-
-  // Save User ID in Member
-  member.createdBy = user._id;
-  await member.save();
 
   return member;
 };
 
-// ===============================
 // Get All Members
-// ===============================
-
 export const getMembers = async () => {
-  return await Member.find({
+  const members = await Member.find({
     isDeleted: { $ne: true },
   }).sort({ createdAt: -1 });
+  // $ne stands for Not Equal.
+  return members;
 };
 
-// ===============================
 // Get Single Member
-// ===============================
 export const getMemberById = async (id) => {
   const member = await Member.findOne({
     _id: id,
@@ -84,9 +36,7 @@ export const getMemberById = async (id) => {
   return member;
 };
 
-// ===============================
 // Update Member
-// ===============================
 export const updateMember = async (id, data) => {
   const member = await Member.findOneAndUpdate(
     {
@@ -107,19 +57,7 @@ export const updateMember = async (id, data) => {
   return member;
 };
 
-// ===============================
 // Delete Member
-// ===============================
-// export const deleteMember = async (id) => {
-//   const member = await Member.findByIdAndDelete(id);
-
-//   if (!member) {
-//     throw new Error("Member not found");
-//   }
-
-//   return member;
-// };
-
 export const deleteMember = async (id, deletedBy) => {
   const member = await Member.findOneAndUpdate(
     {

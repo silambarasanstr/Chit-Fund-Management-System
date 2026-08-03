@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import Input from "../components/common/Input";
+import * as authService from "../features/auth/authService";
 
 export default function Register() {
   const [form, setForm] = useState({
-    firstName: "",
+    name: "",
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
 
@@ -22,12 +26,12 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let newErrors = {};
 
-    if (!form.firstName) newErrors.firstName = "First Name is required";
+    if (!form.name) newErrors.name = "Name is required";
     if (!form.email) newErrors.email = "Email is required";
     if (!form.password) newErrors.password = "Password is required";
 
@@ -36,20 +40,42 @@ export default function Register() {
       return;
     }
 
-    console.log(form);
+    try {
+      await authService.register(form);
+      toast.success("Registration successful. You can now log in.");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Registration failed. Please try again.");
+    }
+   
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
-      <div className="w-full max-w-md p-8 bg-white border border-gray-200 shadow-lg rounded-xl">
+    <div className="flex items-center justify-center min-h-screen px-4 bg-gradient-to-br from-slate-100 via-white to-blue-100">
+       <div className="w-full max-w-sm p-5 bg-white border border-gray-200 shadow-lg rounded-xl">
+       
+       <div className="mb-5 text-center">
+          <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 text-xl text-white bg-blue-600 shadow rounded-xl">
+            💰
+          </div>
+
+          <h1 className="text-xl font-bold text-gray-800">
+            Chit Fund Management
+          </h1>
+
+          <p className="mt-1 text-xs text-gray-500">
+            Register for a new account
+          </p>
+        </div>
+       
         <form onSubmit={handleSubmit}>
           <Input
             label="First Name"
-            name="firstName"
+            name="name"
             placeholder="Enter your first name"
-            value={form.firstName}
+            value={form.name}
             onChange={handleChange}
-            error={errors.firstName}
+            error={errors.name}
             required
           />
 

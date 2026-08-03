@@ -60,15 +60,18 @@ const memberSchema = new mongoose.Schema(
       default: "Active",
     },
 
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
-    // ==========================
-    // Soft Delete Fields
-    // ==========================
     isDeleted: {
       type: Boolean,
       default: false,
@@ -87,7 +90,8 @@ const memberSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+    versionKey: false,
+  },
 );
 
 export default mongoose.model("Member", memberSchema);

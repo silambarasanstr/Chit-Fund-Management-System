@@ -40,7 +40,7 @@ export const getInstallments = async (req, res) => {
 export const getInstallment = async (req, res) => {
   try {
     const installment = await installmentService.getInstallmentById(
-      req.params.id
+      req.params.id,
     );
 
     if (!installment) {
@@ -67,7 +67,7 @@ export const updateInstallment = async (req, res) => {
   try {
     const installment = await installmentService.updateInstallment(
       req.params.id,
-      req.body
+      req.body,
     );
 
     if (!installment) {
@@ -94,7 +94,7 @@ export const updateInstallment = async (req, res) => {
 export const deleteInstallment = async (req, res) => {
   try {
     const installment = await installmentService.deleteInstallment(
-      req.params.id
+      req.params.id,
     );
 
     if (!installment) {
@@ -128,6 +128,26 @@ export const payInstallment = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getMyInstallments = async (req, res) => {
+  try {
+    console.log(req.user,"===> user");
+    const installments = await installmentService.getMyInstallmentsService(
+      req.user.id,
+    );
+
+    res.status(200).json({
+      success: true,
+      count: installments.length,
+      data: installments,
+    });
+  } catch (error) {
+    res.status(500).json({
       success: false,
       message: error.message,
     });

@@ -25,3 +25,8 @@ export const payInstallment = async (id) => {
   const response = await api.post(`/installments/${id}/pay`);
   return response.data;
 };
+
+export const getMyInstallments = async () => {
+  const response = await api.get("/installments/my-installments");
+  return response.data;
+};

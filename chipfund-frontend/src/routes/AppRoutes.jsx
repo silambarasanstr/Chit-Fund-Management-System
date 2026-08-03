@@ -16,7 +16,7 @@ import Installments from "../admin/Installments";
 import Auctions from "../admin/Auctions";
 import Bids from "../admin/Bids";
 import Payments from "../admin/Payments";
-
+import Profile from "../pages/Profile";
 import MyGroups from "../member/MyGroups";
 import MyInstallments from "../member/MyInstallments";
 import MyPayments from "../member/MyPayments";
@@ -41,7 +41,7 @@ const AppRoutes = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
-
+            <Route path="profile" element={<Profile />} />
             <Route path="members" element={<Members />} />
             <Route path="chit-groups" element={<ChitGroups />} />
             <Route path="group-members" element={<GroupMembers />} />
