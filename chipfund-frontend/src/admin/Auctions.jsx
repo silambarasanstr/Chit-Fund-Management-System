@@ -49,7 +49,7 @@ export default function Auctions() {
       <AuctionList
         auctions={auctions}
         loading={loading}
-        fetchAuctions={fetchAuctions}
+        refresh={fetchAuctions}
         onEdit={(item) => {
           setEditData(item);
           setOpen(true);
@@ -60,7 +60,7 @@ export default function Auctions() {
         isOpen={open}
         onClose={() => setOpen(false)}
         editData={editData}
-        onSuccess={fetchAuctions}
+        refresh={fetchAuctions}
       />
     </div>
   );

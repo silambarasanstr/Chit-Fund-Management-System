@@ -3,7 +3,7 @@ import User from "../models/User.js";
 // ===============================
 // Register User
 // ===============================
-export const registerUser = async ({ name, email, password, phone, role }) => {
+export const registerUser = async ({ name, email, password, role }) => {
   // Check if email already exists
   const existingUser = await User.findOne({ email });
 
@@ -16,7 +16,6 @@ export const registerUser = async ({ name, email, password, phone, role }) => {
     name,
     email,
     password,
-    phone,
     role: role || "member",
   });
 
@@ -30,7 +29,6 @@ export const registerUser = async ({ name, email, password, phone, role }) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      phone: user.phone,
       isActive: user.isActive,
     },
     token,
@@ -64,7 +62,6 @@ export const loginUser = async ({ email, password }) => {
       name: user.name,
       email: user.email,
       role: user.role,
-      phone: user.phone,
       isActive: user.isActive,
     },
     token,
@@ -86,7 +83,6 @@ export const getCurrentUser = async (userId) => {
   return user;
 };
 
-
 export const getUsers = async (role) => {
   const filter = {};
 
@@ -94,7 +90,5 @@ export const getUsers = async (role) => {
     filter.role = role;
   }
 
-  return await User.find(filter)
-    .select("name email member")
-    .sort({ name: 1 });
+  return await User.find(filter).select("name email member").sort({ name: 1 });
 };

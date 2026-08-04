@@ -22,7 +22,7 @@ const initialState = {
   remarks: "",
 };
 
-export default function AuctionForm({ isOpen, onClose, editData, onSuccess }) {
+export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
   const [form, setForm] = useState(initialState);
 
   const [groups, setGroups] = useState([]);
@@ -55,6 +55,7 @@ export default function AuctionForm({ isOpen, onClose, editData, onSuccess }) {
       }
     } else {
       setForm(initialState);
+
       setGroupMembers([]);
     }
   }, [isOpen, editData]);
@@ -82,10 +83,6 @@ export default function AuctionForm({ isOpen, onClose, editData, onSuccess }) {
 
     try {
       const res = await getMembersByGroup(groupId);
-
-      console.log("Group Members Response:", res);
-      console.log("Members:", res.data);
-
       setGroupMembers(res?.data || []);
     } catch (err) {
       console.error(err);
@@ -128,11 +125,11 @@ export default function AuctionForm({ isOpen, onClose, editData, onSuccess }) {
         await createAuction(form);
         toast.success("Auction created successfully");
       }
-
-      onSuccess && onSuccess();
-
       setForm(initialState);
       setGroupMembers([]);
+      if (refresh) {
+        await refresh();
+      }
       onClose();
     } catch (err) {
       console.error(err);

@@ -1,4 +1,7 @@
 import { Pencil, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import { deleteAuction } from "../../services/auctionService";
+
 import Button from "../common/Button";
 import TableLoader from "../common/TableLoader";
 import NoDataFound from "../common/NoDataFound";
@@ -7,7 +10,7 @@ export default function AuctionList({
   auctions = [],
   loading = false,
   onEdit,
-  onDelete,
+  refresh,
 }) {
   const formatAmount = (amount) => {
     return Number(amount || 0).toLocaleString("en-IN");
@@ -21,6 +24,17 @@ export default function AuctionList({
       month: "short",
       year: "numeric",
     });
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteAuction(id);
+      toast.success("Auction deleted successfully.");
+      await refresh();
+    } catch (error) {
+      console.error("Error deleting auction:", error);
+      toast.error("Failed to delete auction.");
+    }
   };
 
   return (
@@ -116,7 +130,7 @@ export default function AuctionList({
                       <Button
                         variant="outline"
                         size="icon"
-                        onClick={() => onDelete?.(auction._id)}
+                        onClick={() => handleDelete(auction._id)}
                         className="w-8 h-8 transition-all border-red-200 hover:bg-red-50 hover:border-red-500"
                       >
                         <Trash2 className="w-4 h-4 text-red-600" />

@@ -33,6 +33,7 @@ const ChitGroupList = ({ groups = [], loading = false, onEdit, onDelete }) => {
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10 border-b bg-slate-100 border-slate-200">
             <tr className="text-left text-gray-700">
+              <th className="px-4 py-2.5 text-left whitespace-nowrap">S:No</th>
               <th className="px-4 py-2.5 text-left whitespace-nowrap">
                 Group Name
               </th>
@@ -67,8 +68,9 @@ const ChitGroupList = ({ groups = [], loading = false, onEdit, onDelete }) => {
                 message="There are no chit groups to display."
               />
             ) : (
-              groups.map((group) => (
+              groups.map((group, index) => (
                 <tr key={group._id} className="transition hover:bg-blue-50/40">
+                  <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
                   <td className="px-4 py-3 text-gray-700">{group.groupName}</td>
 
                   <td className="px-4 py-3 text-gray-700">

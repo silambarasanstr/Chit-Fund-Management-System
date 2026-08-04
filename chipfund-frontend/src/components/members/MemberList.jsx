@@ -118,6 +118,7 @@ const MemberList = ({ members, loading, onView, onEdit, refresh }) => {
                   onChange={handleSelectAll}
                 />
               </th>
+              <th className="px-4 py-2.5 text-left whitespace-nowrap">S:No</th>
               <th className="px-4 py-2.5 text-left whitespace-nowrap">Name</th>
               <th className="px-4 py-2.5 text-left whitespace-nowrap">
                 Member ID
@@ -143,7 +144,7 @@ const MemberList = ({ members, loading, onView, onEdit, refresh }) => {
                 message="There are no members to display."
               />
             ) : (
-              members.map((member) => (
+              members.map((member, index) => (
                 <tr key={member._id} className="transition hover:bg-blue-50/40">
                   <td className="px-4 py-3 text-gray-700">
                     <input
@@ -153,6 +154,7 @@ const MemberList = ({ members, loading, onView, onEdit, refresh }) => {
                       onChange={() => handleSelectMember(member._id)}
                     />
                   </td>
+                  <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
                   <td className="px-4 py-3 text-gray-700">{member.name}</td>
                   <td className="px-4 py-3 text-gray-700">{member.memberId}</td>
                   <td className="px-4 py-3 text-gray-700">{member.email}</td>

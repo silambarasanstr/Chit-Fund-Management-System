@@ -75,7 +75,7 @@ export default function Header({ setMobileOpen, collapsed, setCollapsed }) {
           <UserCircle2 size={34} />
 
           <div className="hidden sm:block">
-            <p className="font-medium">{capitalizeName(user?.name)}</p>
+            <p className="font-medium">{capitalizeName(user?.name)} </p>
 
             <p className="text-xs text-gray-500">
               {capitalizeText(user?.role) || "Administrator"}
@@ -85,11 +85,7 @@ export default function Header({ setMobileOpen, collapsed, setCollapsed }) {
 
         {/* Logout */}
 
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          onClick={handleLogout}
-        >
+        <Button variant={"outline"} size={"sm"} onClick={handleLogout}>
           <LogOut size={18} />
           <span className="hidden md:block">Logout</span>
         </Button>
