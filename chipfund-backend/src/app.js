@@ -22,7 +22,10 @@ const app = express();
 // Security
 app.use(helmet());
 
-const allowedOrigins = ["http://localhost:8081"];
+const allowedOrigins = [
+  "http://localhost:8081",
+  "https://chit-fund-management-system.vercel.app",
+];
 
 app.use(
   cors({
@@ -30,11 +33,11 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
       }
     },
     credentials: true,
-  }),
+  })
 );
 
 // Logger
