@@ -50,9 +50,9 @@ export default function Header({ setMobileOpen, collapsed, setCollapsed }) {
         {/* Desktop Toggle */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden p-2 rounded-lg lg:flex hover:bg-gray-100"
+          className="hidden p-2 rounded-lg lg:flex hover:bg-gray-100 "
         >
-          <PanelLeft size={22} />
+          <PanelLeft size={22} className="text-gray-500" />
         </button>
 
         {/* Mobile Toggle */}
@@ -87,7 +87,7 @@ export default function Header({ setMobileOpen, collapsed, setCollapsed }) {
 
         <Button variant={"outline"} size={"sm"} onClick={handleLogout}>
           <LogOut size={18} />
-          <span className="hidden md:block">Logout</span>
+          <span className="hidden text-gray-500 md:block">Logout</span>
         </Button>
       </div>
     </header>

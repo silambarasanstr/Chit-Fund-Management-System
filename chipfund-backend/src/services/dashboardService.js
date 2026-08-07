@@ -7,7 +7,9 @@ import Auction from "../models/Auction.js";
 
 export const getDashboard = async () => {
   const totalUsers = await User.countDocuments();
-  const totalMembers = await Member.countDocuments();
+  const totalMembers = await Member.countDocuments({
+  isDeleted: { $ne: true },
+});
   const totalGroups = await ChitGroup.countDocuments();
   const totalInstallments = await Installment.countDocuments();
   const totalPayments = await Payment.countDocuments();

@@ -107,8 +107,6 @@ export default function InstallmentForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-
     try {
       setLoading(true);
 
@@ -188,9 +186,7 @@ export default function InstallmentForm({
             disabled={!formData.group}
           >
             <option value="">
-              {formData.group
-                ? "Select Member"
-                : "Select Group First"}
+              {formData.group ? "Select Member" : "Select Group First"}
             </option>
 
             {members.map((item) => (
@@ -227,20 +223,12 @@ export default function InstallmentForm({
         />
 
         <div className="flex justify-end gap-3 pt-2">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={handleFormClose}
-          >
+          <Button type="button" variant="secondary" onClick={handleFormClose}>
             Cancel
           </Button>
 
           <Button type="submit" disabled={loading}>
-            {loading
-              ? "Saving..."
-              : editData
-              ? "Update"
-              : "Create"}
+            {loading ? "Saving..." : editData ? "Update" : "Create"}
           </Button>
         </div>
       </form>

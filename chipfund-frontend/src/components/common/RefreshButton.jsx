@@ -9,17 +9,16 @@ const RefreshButton = ({
 }) => {
   return (
     <Button
-      onClick={onRefresh}
-      disabled={loading}
-      title={title}
-      className={`
-       gap-2
-      `}
-    >
-      <RefreshCcw size={18} className={loading ? "animate-spin" : ""} />
-
-      {loading ? "Refreshing..." : "Refresh"}
-    </Button>
+  onClick={onRefresh}
+  disabled={loading}
+  title={title}
+>
+  <RefreshCcw
+    size={18}
+    className={loading ? "animate-spin" : ""}
+  />
+  <span>{loading ? "Refreshing..." : "Refresh"}</span>
+</Button>
   );
 };
 

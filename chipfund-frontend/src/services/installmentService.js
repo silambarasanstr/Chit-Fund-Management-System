@@ -30,3 +30,8 @@ export const getMyInstallments = async () => {
   const response = await api.get("/installments/my-installments");
   return response.data;
 };
+
+export const getInstallmentGroupId = async (groupId) => {
+  const response = await api.get(`/installments/group/${groupId}`);
+  return response.data;
+};

@@ -26,7 +26,7 @@ export default function PaymentList({ payments, loading, onEdit, onDelete }) {
       <div className="overflow-x-auto border rounded-xl">
       <table className="w-full text-sm">
         <thead className="sticky top-0 z-10 border-b bg-slate-100 border-slate-200">
-          <tr className="text-left text-gray-700">
+          <tr className="text-left text-gray-500">
             <th className="px-4 py-3">#</th>
 
             <th className="px-4 py-3 whitespace-nowrap">Member</th>
@@ -63,9 +63,9 @@ export default function PaymentList({ payments, loading, onEdit, onDelete }) {
           ) : (
             payments.map((payment, index) => (
               <tr key={payment._id} className="transition hover:bg-blue-50/40">
-                <td className="px-4 py-3 text-gray-700">{index + 1}</td>
+                <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
 
-                <td className="px-4 py-3 text-gray-700 whitespace-nowrap">
+                <td className="px-4 py-3 font-semibold text-gray-800">
                   {payment.member?.name}
                 </td>
 

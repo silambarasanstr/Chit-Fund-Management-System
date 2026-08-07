@@ -11,6 +11,7 @@ const Input = ({
   required = false,
   disabled = false,
   className = "",
+  autoComplete,
   ...props
 }) => {
   return (
@@ -33,6 +34,7 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
+        autoComplete={autoComplete}
         className={`
           w-full rounded-lg border
           px-3 py-2

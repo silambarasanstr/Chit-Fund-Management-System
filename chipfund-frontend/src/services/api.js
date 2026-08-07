@@ -7,7 +7,6 @@ const api = axios.create({
   },
 });
 
-console.log(import.meta.env.VITE_API_URL);
 
 // Attach JWT Token
 api.interceptors.request.use((config) => {

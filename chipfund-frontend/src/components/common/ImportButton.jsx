@@ -1,3 +1,4 @@
+import { Upload } from "lucide-react";
 import { useRef } from "react";
 import { toast } from "sonner";
 import Button from "./Button";
@@ -52,7 +53,9 @@ const ImportButton = ({ refresh }) => {
       />
 
       <Button
-        variant="secondary"
+        leftIcon={Upload}
+        variant="outline"
+        className={"bg-white"}
         type="button"
         onClick={() => fileInputRef.current?.click()}
       >

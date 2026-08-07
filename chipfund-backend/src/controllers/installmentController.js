@@ -134,9 +134,29 @@ export const payInstallment = async (req, res) => {
   }
 };
 
+export const getInstallmentGroupId = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+
+    const installments = await installmentService.getInstallmentGroupId(
+      groupId
+    );
+
+    res.status(200).json({
+      success: true,
+      count: installments.length,
+      data: installments,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const getMyInstallments = async (req, res) => {
   try {
-    console.log(req.user,"===> user");
     const installments = await installmentService.getMyInstallmentsService(
       req.user.id,
     );

@@ -114,6 +114,12 @@ export default function Sidebar({ mobileOpen, setMobileOpen, collapsed }) {
           ))}
         </nav>
 
+        <div className="p-4 border-t border-slate-800">
+          <p className="text-xs text-slate-400">
+            &copy; 2023 ChitFund. 
+          </p>
+        </div>
+
       </aside>
     </>
   );

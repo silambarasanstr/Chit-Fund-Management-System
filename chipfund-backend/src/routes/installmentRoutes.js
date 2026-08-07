@@ -7,6 +7,7 @@ import {
   deleteInstallment,
   payInstallment,
   getMyInstallments,
+  getInstallmentGroupId,
 } from "../controllers/installmentController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -30,5 +31,7 @@ router.get("/my-installments", getMyInstallments);
 
 // Single installment
 router.get("/:id", getInstallment);
+
+router.get("/group/:groupId", getInstallmentGroupId);
 
 export default router;

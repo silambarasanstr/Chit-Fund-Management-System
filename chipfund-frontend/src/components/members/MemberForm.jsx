@@ -5,6 +5,7 @@ import Modal from "../common/Modal";
 import Button from "../common/Button";
 import { updateMember, createMember } from "../../services/memberService";
 import { getUsers } from "../../features/auth/authService";
+import Select from "../common/Select";
 
 const initialState = {
   user: "",
@@ -21,17 +22,23 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const loadUsers = async () => {
-      const res = await getUsers();
-      const availableUsers = res.data.filter((user) => !user.member);
-      setUsers(availableUsers);
-    };
+ useEffect(() => {
+  const loadUsers = async () => {
+    const res = await getUsers();
 
-    if (isOpen) {
-      loadUsers();
-    }
-  }, [isOpen]);
+    console.log("All Users:", res.data);
+
+    const availableUsers = res.data.filter((user) => !user.member);
+
+    console.log("Available Users:", availableUsers);
+
+    setUsers(availableUsers);
+  };
+
+  if (isOpen) {
+    loadUsers();
+  }
+}, [isOpen]);
 
   const handleChange = (e) => {
     setForm({
@@ -88,6 +95,22 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
     }
   }, [editData]);
 
+  
+
+  const handleQuickSave = () => {
+    const nextNumber = 12; // Replace with actual next number from backend
+
+    setForm((prev) => ({
+      ...prev,
+      memberId: prev.memberId || `MEM${String(nextNumber).padStart(3, "0")}`,
+      name: prev.name || `Member ${nextNumber}`,
+      email: prev.email || `member${nextNumber}@gmail.com`,
+      phone: prev.phone || `987654${String(nextNumber).padStart(4, "0")}`,
+      address: prev.address || `Chennai, Tamil Nadu`,
+      status: prev.status || "Active",
+    }));
+  };
+
   return (
     <Modal
       title={editData ? "Edit Member" : "Add Member"}
@@ -99,27 +122,28 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
     >
       <form onSubmit={handleSubmit} className="space-y-2">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <select
-            name="user"
-            value={form.user}
-            onChange={handleChange}
-            className="w-full px-3 py-2 transition border border-gray-300 rounded outline-none md:col-span-2"
-          >
-            <option value="">Select User</option>
-
-            {users.map((user) => (
-              <option key={user._id} value={user._id}>
-                {user.name} ({user.email})
-              </option>
-            ))}
-          </select>
+          <div>
+            <label className="block mb-1 text-xs font-medium text-gray-700">
+              User <span className="text-red-500">*</span>
+            </label>
+            <Select
+              name="user"
+              value={form.user}
+              onChange={handleChange}
+              placeholder="Select a user"
+              options={users.map((user) => ({
+                value: user._id,
+                label: `${user.name} (${user.email})`,
+              }))}
+            />
+          </div>
 
           <Input
             label="Member ID"
             name="memberId"
             value={form.memberId}
             onChange={handleChange}
-            placeholder="Enter member ID"
+            placeholder="e.g. MEM001"
           />
 
           <Input
@@ -127,7 +151,7 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
             name="name"
             value={form.name}
             onChange={handleChange}
-            placeholder="Enter member name"
+            placeholder="e.g. Suresh"
             required
           />
 
@@ -136,7 +160,7 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
             name="email"
             value={form.email}
             onChange={handleChange}
-            placeholder="Enter member email"
+            placeholder="e.g. suresh@example.com"
             required
           />
 
@@ -146,7 +170,7 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
             name="phone"
             value={form.phone}
             onChange={handleChange}
-            placeholder="Enter member phone"
+            placeholder="e.g. 9876543210"
             required
           />
 
@@ -155,13 +179,16 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
               label="Address"
               name="address"
               value={form.address}
-              placeholder="Enter member address"
+              placeholder="e.g. 123 Main Street"
               onChange={handleChange}
             />
           </div>
         </div>
 
         <div className="flex justify-end gap-3">
+          <Button variant="outline" onClick={handleQuickSave}>
+            Quick Save
+          </Button>
           <Button variant="secondary" type="button" onClick={handleFormClose}>
             Cancel
           </Button>

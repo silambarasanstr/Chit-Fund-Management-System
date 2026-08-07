@@ -7,6 +7,7 @@ import TableLoader from "../common/TableLoader";
 import NoDataFound from "../common/NoDataFound";
 
 const columns = [
+  "S.No",
   "Group",
   "Member",
   "Inst. No",
@@ -49,25 +50,37 @@ export default function InstallmentList({
                 message="There are no installments to display."
               />
             ) : (
-              installments.map((item) => (
+              installments.map((item, index) => (
                 <tr key={item._id} className="transition hover:bg-blue-50/40">
-                  <td className="px-4 py-3 font-medium text-gray-800 whitespace-nowrap">
+                  <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
+                  <td className="px-4 py-3 font-semibold text-gray-800 whitespace-nowrap">
                     {item.group?.groupName}
                   </td>
 
                   <td className="px-4 py-3 text-gray-700 whitespace-nowrap">
-                    {item.member?.name}
+                    {item.member ? (
+                      <>
+                        {item.member.name}
+                        {item.member.isDeleted && (
+                          <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700">
+                            Deleted
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      "-"
+                    )}
                   </td>
 
-                  <td className="px-4 py-3 text-center text-gray-700">
+                  <td className="px-4 py-3 text-gray-700">
                     {item.installmentNo}
                   </td>
 
-                  <td className="px-4 py-3 font-medium text-right text-gray-800">
+                  <td className="px-4 py-3 font-medium text-gray-800">
                     ₹{item.dueAmount?.toLocaleString()}
                   </td>
 
-                  <td className="px-4 py-3 font-medium text-right text-green-600">
+                  <td className="px-4 py-3 font-medium text-green-600">
                     ₹{item.paidAmount?.toLocaleString()}
                   </td>
 
@@ -100,10 +113,7 @@ export default function InstallmentList({
                         <Pencil className="w-4 h-4 text-blue-600" />
                       </Button>
 
-                      <Button
-                        variant="success"
-                        onClick={() => onPay(item)}
-                      >
+                      <Button variant="success" onClick={() => onPay(item)}>
                         Pay
                       </Button>
 

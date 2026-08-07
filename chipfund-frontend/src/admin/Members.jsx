@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 // 2. Third-party Libraries
-import { Users } from "lucide-react";
+import { Users, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
 // 3. Services / API
@@ -37,7 +37,7 @@ const Members = () => {
 
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
   const [currentPage, setCurrentPage] = useState(1);
 
   // API Functions
@@ -164,18 +164,19 @@ const Members = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between p-4 mb-4 bg-white border rounded-lg shadow-sm">
+      <div className="flex items-center justify-between p-2 mb-4 bg-white border rounded-lg shadow-sm">
         <div>
           <div className="flex items-center gap-2">
-            <Users size={18} className="text-blue-600" />
+            <Users size={15}  />
             <span className="text-sm text-gray-500">Total Members</span>
           </div>
-          <p className="text-2xl font-bold">{members.length}</p>
+          
         </div>
 
-        <div className="text-right">
+        <div className="flex items-center gap-2 text-right">
+          <p className="text-2xl font-bold">{members.length}</p>
           <p className="text-sm text-gray-500">Showing</p>
-          <h2 className="text-2xl font-bold text-blue-600">
+          <h2 className="text-sm font-bold text-blue-600">
             {currentMembers.length}
           </h2>
         </div>
@@ -202,7 +203,7 @@ const Members = () => {
         member={viewingData}
       />
 
-      <div className="flex flex-col items-center justify-between mt-5 md:flex-row">
+      <div className="flex flex-col items-center justify-between md:flex-row">
         <RowsPerPage value={itemsPerPage} onChange={setItemsPerPage} />
 
         <Pagination

@@ -10,14 +10,14 @@ export const createInstallment = async (data) => {
 export const getAllInstallments = async () => {
   return await Installment.find()
     .populate("group", "groupName")
-    .populate("member", "name");
+    .populate("member", "name isDeleted");
 };
 
 // Get Installment By ID
 export const getInstallmentById = async (id) => {
   return await Installment.findById(id)
     .populate("group", "groupName")
-    .populate("member", "name");
+    .populate("member", "name isDeleted");
 };
 
 // Update Installment
@@ -48,8 +48,17 @@ export const payInstallment = async (id) => {
   return await installment.save();
 };
 
+export const getInstallmentGroupId = async (groupId) => {
+  console.log("Group ID:", groupId);
+  return await Installment.find({
+    group: groupId,
+    
+  })
+    .select("_id installmentNo dueAmount status")
+    .sort({ installmentNo: 1 });
+};
+
 export const getMyInstallmentsService = async (userId) => {
-  console.log(userId, "===> userId");
   const member = await Member.findOne({ user: userId });
 
   console.log(member);

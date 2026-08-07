@@ -1,34 +1,32 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { createAuction, updateAuction } from "../../services/auctionService";
+import { getChitGroups } from "../../services/chitGroupService";
+import { getInstallments } from "../../services/installmentService";
+import { getInstallmentGroupId } from "../../services/installmentService";
+import { getMembersByGroup } from "../../services/groupMemberService";
+
 import Modal from "../common/Modal";
 import Input from "../common/Input";
 import Button from "../common/Button";
-
-import { createAuction, updateAuction } from "../../services/auctionService";
-
-import { getChitGroups } from "../../services/chitGroupService";
-import { getInstallments } from "../../services/installmentService";
-import { getMembersByGroup } from "../../services/groupMemberService";
+import Select from "../common/Select";
 
 const initialState = {
   chitGroup: "",
-  installment: "",
+  installmentNo: "",
   auctionDate: "",
+  bidAmount: "",
   winner: "",
-  winningBid: 0,
-  dividendPerMember: 0,
   status: "Pending",
   remarks: "",
 };
 
 export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
   const [form, setForm] = useState(initialState);
-
+  const [members, setMembers] = useState([]);
   const [groups, setGroups] = useState([]);
   const [installments, setInstallments] = useState([]);
-  const [groupMembers, setGroupMembers] = useState([]);
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -39,26 +37,39 @@ export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
     if (editData) {
       setForm({
         chitGroup: editData.chitGroup?._id || "",
-        installment: editData.installment?._id || "",
+        installmentNo: editData.installmentNo || "",
         auctionDate: editData.auctionDate
           ? editData.auctionDate.split("T")[0]
           : "",
+        bidAmount: editData.bidAmount || 0,
         winner: editData.winner?._id || "",
-        winningBid: editData.winningBid || 0,
-        dividendPerMember: editData.dividendPerMember || 0,
         status: editData.status || "Pending",
         remarks: editData.remarks || "",
       });
-
-      if (editData.chitGroup?._id) {
-        fetchGroupMembers(editData.chitGroup._id);
-      }
     } else {
       setForm(initialState);
-
-      setGroupMembers([]);
     }
   }, [isOpen, editData]);
+
+  useEffect(() => {
+    if (!form.chitGroup) {
+      setMembers([]);
+      return;
+    }
+
+    const fetchGroupMembers = async () => {
+      try {
+        const res = await getMembersByGroup(form.chitGroup);
+
+        setMembers(Array.isArray(res.data) ? res.data : []);
+      } catch (error) {
+        console.error(error);
+        setMembers([]);
+      }
+    };
+
+    fetchGroupMembers();
+  }, [form.chitGroup]);
 
   const fetchDropdowns = async () => {
     try {
@@ -66,51 +77,53 @@ export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
 
       setGroups(groupRes?.data?.data || groupRes?.data || []);
 
-      const installmentRes = await getInstallments();
+      // const installmentRes = await getInstallments();
 
-      setInstallments(installmentRes?.data?.data || installmentRes?.data || []);
+      // setInstallments(installmentRes?.data?.data || installmentRes?.data || []);
     } catch (err) {
       console.error(err);
       toast.error("Failed to load dropdown data");
     }
   };
 
-  const fetchGroupMembers = async (groupId) => {
-    if (!groupId) {
-      setGroupMembers([]);
-      return;
-    }
-
-    try {
-      const res = await getMembersByGroup(groupId);
-      setGroupMembers(res?.data || []);
-    } catch (err) {
-      console.error(err);
-      setGroupMembers([]);
-      toast.error("Failed to load group members");
-    }
-  };
-
-  console.log(groupMembers);
-
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
 
     if (name === "chitGroup") {
       setForm((prev) => ({
         ...prev,
         chitGroup: value,
+        installmentNo: "",
         winner: "",
       }));
 
-      fetchGroupMembers(value);
+      return;
     }
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
+  useEffect(() => {
+    if (!form.chitGroup) {
+      setInstallments([]);
+      return;
+    }
+
+    const fetchInstallments = async () => {
+      try {
+        const res = await getInstallmentGroupId(form.chitGroup);
+        setInstallments(res?.data?.data || res?.data || []);
+      } catch (err) {
+        console.error(err);
+        setInstallments([]);
+      }
+    };
+
+    fetchInstallments();
+  }, [form.chitGroup]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -118,26 +131,54 @@ export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
     try {
       setLoading(true);
 
+      const payload = {
+        chitGroup: form.chitGroup,
+        installmentNo: Number(form.installmentNo),
+        auctionDate: form.auctionDate,
+        bidAmount: Number(form.bidAmount),
+        winner: form.winner,
+        status: form.status,
+        remarks: form.remarks,
+      };
+
       if (editData) {
-        await updateAuction(editData._id, form);
+        await updateAuction(editData._id, payload);
         toast.success("Auction updated successfully");
       } else {
-        await createAuction(form);
+        await createAuction(payload);
         toast.success("Auction created successfully");
       }
-      setForm(initialState);
-      setGroupMembers([]);
-      if (refresh) {
-        await refresh();
-      }
+
+      console.log(payload);
+
+      refresh();
       onClose();
-    } catch (err) {
-      console.error(err);
-      toast.error(err?.response?.data?.message || "Something went wrong");
+      setForm(initialState);
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Failed to save auction");
     } finally {
       setLoading(false);
     }
   };
+
+  console.log(members);
+  console.log(form);
+
+  const selectedGroup = groups.find((group) => group._id === form.chitGroup);
+
+  const totalMembers = members.length;
+
+  const chitAmount = Number(selectedGroup?.chitAmount || 0);
+
+  const prizeAmount = chitAmount - Number(form.bidAmount || 0);
+
+  const dividendPerMember = Number(form.bidAmount || 0) / (totalMembers || 1);
+
+  const uniqueInstallments = installments.filter(
+    (item, index, self) =>
+      index === self.findIndex((i) => i.installmentNo === item.installmentNo),
+  );
 
   return (
     <Modal
@@ -149,55 +190,47 @@ export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {/* Chit Group */}
           <div>
-            <label className="block mb-1 text-sm font-medium">
+            <label className="block mb-1 text-xs font-medium text-gray-700">
               Chit Group <span className="text-red-500">*</span>
             </label>
 
-            <select
+            <Select
               name="chitGroup"
               value={form.chitGroup}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-              <option value="">Select Group</option>
-
-              {groups.map((group) => (
-                <option key={group._id} value={group._id}>
-                  {group.groupName}
-                </option>
-              ))}
-            </select>
+              
+              options={groups.map((group) => ({
+                value: group._id,
+                label: group.groupName,
+              }))}
+            />
           </div>
+
+          <Input
+            label="Chit Amount"
+            type="number"
+            name="chitAmount"
+            value={chitAmount}
+            readOnly
+            required
+          />
 
           {/* Installment */}
           <div>
-            <label className="block mb-1 text-sm font-medium">
-              Installment <span className="text-red-500">*</span>
+            <label className="block mb-1 text-xs font-medium text-gray-700">
+              Installment No <span className="text-red-500">*</span>
             </label>
 
-            <select
-              name="installment"
-              value={form.installment}
+            <Select
+              name="installmentNo"
+              value={form.installmentNo}
               onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-              <option value="">Select Installment</option>
-
-              {installments
-                .filter(
-                  (item) =>
-                    !form.chitGroup ||
-                    item.chitGroup === form.chitGroup ||
-                    item.chitGroup?._id === form.chitGroup,
-                )
-                .map((item) => (
-                  <option key={item._id} value={item._id}>
-                    Installment #{item.installmentNo}
-                  </option>
-                ))}
-            </select>
+              options={uniqueInstallments}
+              valueKey="installmentNo"
+              labelKey="installmentNo"
+              placeholder="Select Installment"
+            />
           </div>
 
           <Input
@@ -209,57 +242,65 @@ export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
             required
           />
 
-          {/* Winner */}
-          <div>
-            <label className="block mb-1 text-sm font-medium">Winner</label>
-
-            <select
-              name="winner"
-              value={form.winner}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-              <option value="">Select Winner</option>
-
-              {groupMembers.map((item) => (
-                <option key={item.member._id} value={item.member._id}>
-                  {item.member.memberId} - {item.member.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
           <Input
-            label="Winning Bid"
+            label="Bid Amount (Discount)"
             type="number"
-            name="winningBid"
-            value={form.winningBid}
+            name="bidAmount"
+            value={form.bidAmount}
+            placeholder="Enter Bid Amount"
             onChange={handleChange}
             min={0}
+          />
+
+          <Input
+            label="Prize Amount"
+            name="prizeAmount"
+            value={prizeAmount}
+            readOnly
+            onChange={handleChange}
           />
 
           <Input
             label="Dividend Per Member"
-            type="number"
             name="dividendPerMember"
-            value={form.dividendPerMember}
+            value={dividendPerMember.toFixed(2)}
             onChange={handleChange}
+            readOnly
             min={0}
           />
 
           <div className="md:col-span-2">
-            <label className="block mb-1 text-sm font-medium">Status</label>
+            <label className="block mb-1 text-xs font-medium text-gray-700">
+              Winner <span className="text-red-500">*</span>
+            </label>
+            <Select
+              name="winner"
+              value={form.winner}
+              onChange={handleChange}
+              options={members.map((item) => ({
+                value: item.member._id,
+                label: `${item.member.memberId} - ${item.member.name}`,
+              }))}
+              placeholder="Select Winner"
+              required
+            />
+          </div>
 
-            <select
+          <div className="md:col-span-2">
+            <label className="block mb-1 text-xs font-medium text-gray-700">
+              Status
+            </label>
+
+            <Select
               name="status"
               value={form.status}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-              <option value="Pending">Pending</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
+              options={[
+                { value: "Pending", label: "Pending" },
+                { value: "Completed", label: "Completed" },
+                { value: "Cancelled", label: "Cancelled" },
+              ]}
+            />
           </div>
         </div>
 

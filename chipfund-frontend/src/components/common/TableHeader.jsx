@@ -1,7 +1,7 @@
 export default function TableHeader({ columns }) {
   return (
     <thead className="sticky top-0 z-10 border-b bg-slate-100 border-slate-200">
-      <tr className="text-left text-gray-700">
+      <tr className="text-left text-gray-500">
         {columns.map((column, index) => (
           <th
             key={index}

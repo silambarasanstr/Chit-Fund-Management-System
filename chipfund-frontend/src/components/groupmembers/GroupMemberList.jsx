@@ -37,7 +37,8 @@ export default function GroupMemberList({
       <div className="overflow-x-auto border rounded-xl">
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10 border-b bg-slate-100 border-slate-200">
-            <tr className="text-left text-gray-700">
+            <tr className="text-left text-gray-500">
+              <th className="px-4 py-2.5 text-left whitespace-nowrap">S.No</th>
               <th className="px-4 py-2.5 text-left whitespace-nowrap">Group</th>
               <th className="px-4 py-2.5 text-left whitespace-nowrap">
                 Member
@@ -63,9 +64,10 @@ export default function GroupMemberList({
                 message="There are no members to display."
               />
             ) : (
-              groupMembers.map((item) => (
+              groupMembers.map((item, index) => (
                 <tr key={item._id} className="transition hover:bg-blue-50/40">
-                  <td className="px-4 py-3 text-gray-700">
+                  <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
+                  <td className="px-4 py-3 font-semibold text-gray-800">
                     {item.chitGroup?.groupName || "-"}
                   </td>
 

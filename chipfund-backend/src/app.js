@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import healthRoutes from "./routes/healthRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import memberRoutes from "./routes/memberRoutes.js";
 import chitGroupRoutes from "./routes/chitGroupRoutes.js";
@@ -37,7 +38,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 // Logger
@@ -51,12 +52,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Health Check
-app.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "🚀 CHIPFUND Backend API is running...",
-  });
-});
+app.use("/api/health", healthRoutes);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/members", memberRoutes);

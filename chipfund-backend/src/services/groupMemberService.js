@@ -2,6 +2,7 @@ import GroupMember from "../models/GroupMember.js";
 import Member from "../models/Member.js";
 import ChitGroup from "../models/ChitGroup.js";
 
+// Create Group Member
 export const createGroupMember = async (data) => {
   // Auto Member Number
   const count = await GroupMember.countDocuments({
@@ -18,33 +19,44 @@ export const createGroupMember = async (data) => {
     .select("-__v");
 };
 
+
+// Get All Group Members
 export const getAllGroupMembers = async () => {
-  return await GroupMember.find()
-    .populate("member", "name phone email")
+  const groupMembers = await GroupMember.find()
+    .populate({
+      path: "member",
+      select: "name phone email",
+      match: { isDeleted: { $ne: true } },
+    })
     .populate("chitGroup", "groupName chitAmount")
     .select("-__v")
     .sort({ createdAt: -1 });
+
+  return groupMembers.filter((item) => item.member);
 };
 
-// ===============================
-// Get By Id
-// ===============================
+
+// Get Group Member By Id
 export const getGroupMemberById = async (id) => {
+  console.log(id, "getGroupMemberById");
   const groupMember = await GroupMember.findById(id)
-    .populate("member", "name phone email")
+    .populate({
+      path: "member",
+      select: "name phone email",
+      match: { isDeleted: { $ne: true } },
+    })
     .populate("chitGroup", "groupName chitAmount")
     .select("-__v");
 
-  if (!groupMember) {
+  if (!groupMember || !groupMember.member) {
     throw new Error("Group Member not found");
   }
 
   return groupMember;
 };
 
-// ===============================
-// Update
-// ===============================
+
+// Update Group Member
 export const updateGroupMember = async (id, data) => {
   const groupMember = await GroupMember.findByIdAndUpdate(id, data, {
     new: true,
@@ -61,9 +73,7 @@ export const updateGroupMember = async (id, data) => {
   return groupMember;
 };
 
-// ===============================
-// Delete
-// ===============================
+// Delete Group Member
 export const deleteGroupMember = async (id) => {
   const groupMember = await GroupMember.findByIdAndDelete(id);
 
@@ -74,18 +84,32 @@ export const deleteGroupMember = async (id) => {
   return groupMember;
 };
 
-// ===============================
 // Get Members By Group
-// ===============================
 export const getMembersByGroup = async (groupId) => {
-  return await GroupMember.find({
+  console.log(groupId, "getMembersGroup");
+
+  const groupMembers = await GroupMember.find({
     chitGroup: groupId,
   })
-    .populate("member", "memberId name phone email")
+    .populate({
+      path: "chitGroup",
+      select: "groupName chitAmount",
+    })
+    .populate({
+      path: "member",
+      select: "memberId name phone email",
+      match: {
+        isDeleted: { $ne: true },
+        status: "Active",
+      },
+    })
     .select("-__v")
     .sort({ createdAt: -1 });
+
+  return groupMembers.filter((item) => item.member);
 };
 
+// Get Groups By Member
 export const getGroupsByMember = async (memberId) => {
   const groups = await GroupMember.find({
     member: memberId,

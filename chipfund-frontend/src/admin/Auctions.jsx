@@ -22,8 +22,6 @@ export default function Auctions() {
     }
   };
 
-  console.log(auctions);
-
   useEffect(() => {
     fetchAuctions();
   }, []);

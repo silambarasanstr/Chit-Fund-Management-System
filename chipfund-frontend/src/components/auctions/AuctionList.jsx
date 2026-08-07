@@ -42,9 +42,9 @@ export default function AuctionList({
       <div className="overflow-x-auto border rounded-xl">
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10 border-b bg-slate-100 border-slate-200">
-            <tr className="text-left text-gray-700">
-              <th className="px-4 py-3 whitespace-nowrap">#</th>
-              <th className="px-4 py-3 whitespace-nowrap">Group</th>
+            <tr className="text-left text-gray-500">
+              <th className="px-4 py-3 whitespace-nowrap">S:No</th>
+              <th className="px-4 py-3 whitespace-nowrap">ChitGroup</th>
               <th className="px-4 py-3 whitespace-nowrap">Installment</th>
               <th className="px-4 py-3 whitespace-nowrap">Auction Date</th>
               <th className="px-4 py-3 whitespace-nowrap">Winner</th>
@@ -72,30 +72,37 @@ export default function AuctionList({
                   key={auction._id}
                   className="transition hover:bg-blue-50/40"
                 >
-                  <td className="px-4 py-3 text-gray-700">{index + 1}</td>
+                  <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
 
-                  <td className="px-4 py-3 text-gray-700">
+                  <td className="px-4 py-3 font-semibold text-gray-800">
                     {auction.chitGroup?.groupName || "-"}
                   </td>
 
                   <td className="px-4 py-3 text-gray-700">
-                    {auction.installment?.installmentNo
-                      ? `#${auction.installment.installmentNo}`
-                      : "-"}
+                    {auction.installmentNo}
                   </td>
 
                   <td className="px-4 py-3 text-gray-700">
                     {formatDate(auction.auctionDate)}
                   </td>
 
-                  <td className="px-4 py-3 text-gray-700">
-                    {auction.winner
-                      ? `${auction.winner.memberId} - ${auction.winner.name}`
-                      : "-"}
+                  <td className="px-4 py-3">
+                    {auction.winner ? (
+                      <>
+                        {auction.winner.memberId} - {auction.winner.name}
+                        {auction.winner.isDeleted && (
+                          <span className="ml-2 rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-700">
+                            Deleted
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      "-"
+                    )}
                   </td>
 
                   <td className="px-4 py-3 font-medium text-gray-800">
-                    ₹{formatAmount(auction.winningBid)}
+                    ₹{formatAmount(auction.bidAmount)}
                   </td>
 
                   <td className="px-4 py-3 font-medium text-green-600">

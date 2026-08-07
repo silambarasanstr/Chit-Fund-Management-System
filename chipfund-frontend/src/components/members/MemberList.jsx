@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Eye, Pencil, Trash2, CheckCircle2 } from "lucide-react";
+import { Eye, Pencil, Trash2, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 import { deleteMember, bulkDeleteMembers } from "../../services/memberService";
 import Button from "../../components/common/Button";
@@ -82,9 +82,9 @@ const MemberList = ({ members, loading, onView, onEdit, refresh }) => {
 
   return (
     <div className="p-5 overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 mb-4 border border-blue-200 rounded-xl bg-blue-50">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2 mb-4 border border-blue-200 rounded-xl bg-blue-50">
         <div className="flex items-center gap-2">
-          <CheckCircle2 size={18} className="text-blue-600" />
+          <RefreshCcw size={15} />
 
           <span className="text-sm font-medium text-blue-700">
             {selectedMembers.length} member
@@ -95,10 +95,11 @@ const MemberList = ({ members, loading, onView, onEdit, refresh }) => {
         {selectedMembers.length > 0 && (
           <Button
             variant="danger"
+            size={"sm"}
             onClick={handleBulkDelete}
             disabled={loading}
           >
-            <Trash2 size={16} />
+            <Trash2 size={15} />
             Delete Selected
           </Button>
         )}
@@ -107,7 +108,7 @@ const MemberList = ({ members, loading, onView, onEdit, refresh }) => {
       <div className="overflow-x-auto border rounded-xl">
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10 border-b bg-slate-100 border-slate-200">
-            <tr className="text-left text-gray-700">
+            <tr className="text-left text-gray-500">
               <th className="px-4 py-2.5 text-left whitespace-nowrap">
                 <input
                   ref={(el) => {
@@ -155,8 +156,10 @@ const MemberList = ({ members, loading, onView, onEdit, refresh }) => {
                     />
                   </td>
                   <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
-                  <td className="px-4 py-3 text-gray-700">{member.name}</td>
-                  <td className="px-4 py-3 text-gray-700">{member.memberId}</td>
+                  <td className="px-4 py-3 font-semibold text-gray-800">
+                    {member.name}
+                  </td>
+                  <td className="px-4 py-3 text-blue-600">{member.memberId}</td>
                   <td className="px-4 py-3 text-gray-700">{member.email}</td>
                   <td className="px-4 py-3 text-gray-700">{member.phone}</td>
                   <td className="px-4 py-3 text-gray-700">

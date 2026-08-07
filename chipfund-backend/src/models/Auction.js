@@ -8,10 +8,10 @@ const auctionSchema = new mongoose.Schema(
       required: true,
     },
 
-    installment: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Installment",
+    installmentNo: {
+      type: Number,
       required: true,
+      min: 1,
     },
 
     auctionDate: {
@@ -19,16 +19,16 @@ const auctionSchema = new mongoose.Schema(
       required: true,
     },
 
+    bidAmount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+
     winner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Member",
       default: null,
-    },
-
-    winningBid: {
-      type: Number,
-      default: 0,
-      min: 0,
     },
 
     dividendPerMember: {
@@ -52,7 +52,9 @@ const auctionSchema = new mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
+
+
 
 export default mongoose.model("Auction", auctionSchema);

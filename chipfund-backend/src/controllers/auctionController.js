@@ -1,7 +1,37 @@
 import * as auctionService from "../services/auctionService.js";
+import GroupMember from "../models/GroupMember.js";
+
+// export const createAuction = async (req, res) => {
+//   try {
+//     const auction = await auctionService.createAuction(req.body);
+
+//     res.status(201).json({
+//       success: true,
+//       message: "Auction created successfully",
+//       data: auction,
+//     });
+//   } catch (error) {
+//     res.status(400).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 
 export const createAuction = async (req, res) => {
   try {
+    const { chitGroup, bidAmount } = req.body;
+
+    // Count active members in the group
+    const totalMembers = await GroupMember.countDocuments({
+      chitGroup,
+      status: "Active",
+    });
+
+    // Calculate dividend
+    req.body.dividendPerMember =
+      totalMembers > 0 ? Number(bidAmount) / totalMembers : 0;
+
     const auction = await auctionService.createAuction(req.body);
 
     res.status(201).json({
@@ -57,12 +87,46 @@ export const getAuctionById = async (req, res) => {
   }
 };
 
+// export const updateAuction = async (req, res) => {
+//   try {
+//     const auction = await auctionService.updateAuction(
+//       req.params.id,
+//       req.body
+//     );
+
+//     if (!auction) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "Auction not found",
+//       });
+//     }
+
+//     res.json({
+//       success: true,
+//       message: "Auction updated successfully",
+//       data: auction,
+//     });
+//   } catch (error) {
+//     res.status(400).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 export const updateAuction = async (req, res) => {
   try {
-    const auction = await auctionService.updateAuction(
-      req.params.id,
-      req.body
-    );
+    const { chitGroup, bidAmount } = req.body;
+
+    const totalMembers = await GroupMember.countDocuments({
+      chitGroup,
+      status: "Active",
+    });
+
+    req.body.dividendPerMember =
+      totalMembers > 0 ? Number(bidAmount) / totalMembers : 0;
+
+    const auction = await auctionService.updateAuction(req.params.id, req.body);
 
     if (!auction) {
       return res.status(404).json({

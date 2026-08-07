@@ -7,15 +7,13 @@ export const createAuction = async (data) => {
 export const getAuctions = async () => {
   return await Auction.find()
     .populate("chitGroup", "groupName")
-    .populate("installment", "installmentNo")
-    .populate("winner", "memberId name");
+    .populate("winner", "memberId name isDeleted");
 };
 
 export const getAuctionById = async (id) => {
   return await Auction.findById(id)
     .populate("chitGroup", "groupName")
-    .populate("installment", "installmentNo")
-    .populate("winner", "memberId name");
+    .populate("winner", "memberId name isDeleted");
 };
 
 export const updateAuction = async (id, data) => {

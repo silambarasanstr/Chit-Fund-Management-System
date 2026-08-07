@@ -58,6 +58,33 @@ export const updateMember = async (id, data) => {
 };
 
 // Delete Member
+// export const deleteMember = async (id, deletedBy) => {
+//   const member = await Member.findOneAndUpdate(
+//     {
+//       _id: id,
+//       isDeleted: { $ne: true },
+//     },
+//     {
+//       $set: {
+//         isDeleted: true,
+//         deletedAt: new Date(),
+//         deletedBy,
+//         status: "Inactive",
+//       },
+//     },
+//     {
+//       new: true,
+//     },
+//   );
+
+//   if (!member) {
+//     throw new Error("Member not found");
+//   }
+
+//   return member;
+// };
+
+
 export const deleteMember = async (id, deletedBy) => {
   const member = await Member.findOneAndUpdate(
     {
@@ -67,19 +94,27 @@ export const deleteMember = async (id, deletedBy) => {
     {
       $set: {
         isDeleted: true,
-        deletedAt: new Date(),
         deletedBy,
-        status: "Inactive",
+        deletedAt: new Date(),
       },
     },
-    {
-      new: true,
-    },
+    { new: true },
   );
 
   if (!member) {
     throw new Error("Member not found");
   }
+
+  // 👇 User collection-ல member reference-ஐ remove பண்ணு
+  // ஒரு document-ல் குறிப்பிட்ட field-ன் value-வை புதிதாக set (அல்லது update) செய்வது.
+  await User.findOneAndUpdate(
+    { member: id },
+    {
+      $set: {
+        member: null,
+      },
+    },
+  );
 
   return member;
 };

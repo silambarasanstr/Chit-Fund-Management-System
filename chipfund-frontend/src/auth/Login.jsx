@@ -84,6 +84,7 @@ export default function Login() {
             value={form.email}
             onChange={handleChange}
             error={errors.email}
+            autoComplete="email"
           />
 
           <Input
@@ -94,6 +95,7 @@ export default function Login() {
             value={form.password}
             onChange={handleChange}
             error={errors.password}
+            autoComplete="current-password"
           />
 
           {error && (

@@ -9,7 +9,7 @@ export default function BidList({ bids, loading, onEdit, onDelete }) {
       <div className="overflow-x-auto border rounded-xl">
         <table className="w-full text-sm">
           <thead className="sticky top-0 z-10 border-b bg-slate-100 border-slate-200">
-            <tr className="text-left text-gray-700">
+            <tr className="text-left text-gray-500">
               <th className="px-4 py-3">#</th>
 
               <th className="px-4 py-3">Auction</th>
