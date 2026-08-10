@@ -22,23 +22,23 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
- useEffect(() => {
-  const loadUsers = async () => {
-    const res = await getUsers();
+  useEffect(() => {
+    const loadUsers = async () => {
+      const res = await getUsers();
 
-    console.log("All Users:", res.data);
+      console.log("All Users:", res.data);
 
-    const availableUsers = res.data.filter((user) => !user.member);
+      const availableUsers = res.data.filter((user) => !user.member);
 
-    console.log("Available Users:", availableUsers);
+      console.log("Available Users:", availableUsers);
 
-    setUsers(availableUsers);
-  };
+      setUsers(availableUsers);
+    };
 
-  if (isOpen) {
-    loadUsers();
-  }
-}, [isOpen]);
+    if (isOpen) {
+      loadUsers();
+    }
+  }, [isOpen]);
 
   const handleChange = (e) => {
     setForm({
@@ -95,8 +95,6 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
     }
   }, [editData]);
 
-  
-
   const handleQuickSave = () => {
     const nextNumber = 12; // Replace with actual next number from backend
 
@@ -106,7 +104,7 @@ const MemberForm = ({ editData, isOpen, onClose, refresh }) => {
       name: prev.name || `Member ${nextNumber}`,
       email: prev.email || `member${nextNumber}@gmail.com`,
       phone: prev.phone || `987654${String(nextNumber).padStart(4, "0")}`,
-      address: prev.address || `Chennai, Tamil Nadu`,
+      address: prev.address || "Chennai, Tamil Nadu",
       status: prev.status || "Active",
     }));
   };

@@ -10,9 +10,7 @@ import chitGroupRoutes from "./routes/chitGroupRoutes.js";
 import groupMemberRoutes from "./routes/groupMemberRoutes.js";
 import installmentRoutes from "./routes/installmentRoutes.js";
 import auctionRoutes from "./routes/auctionRoutes.js";
-import bidRoutes from "./routes/bidRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
-import reportRoutes from "./routes/reportRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 import notFoundMiddleware from "./middleware/notFoundMiddleware.js";
@@ -60,9 +58,7 @@ app.use("/api/chit-groups", chitGroupRoutes);
 app.use("/api/group-members", groupMemberRoutes);
 app.use("/api/installments", installmentRoutes);
 app.use("/api/auctions", auctionRoutes);
-app.use("/api/bids", bidRoutes);
 app.use("/api/payments", paymentRoutes);
-app.use("/api/reports", reportRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 // 404 Handler

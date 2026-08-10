@@ -1,0 +1,38 @@
+services:
+  frontend:
+    build:
+      context: ./chipfund-frontend
+      dockerfile: Dockerfile
+    container_name: chitfund-frontend
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:8080/api
+    volumes:
+      - ./chipfund-frontend:/app
+      - /app/node_modules
+    networks:
+      - chitfund-network
+
+  backend:
+    build:
+      context: ./chipfund-backend
+      dockerfile: Dockerfile
+    container_name: chitfund-backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./chipfund-backend/.env
+    environment:
+      - PORT=8080
+    volumes:
+      - ./chipfund-backend:/app
+      - /app/node_modules
+    networks:
+      - chitfund-network
+
+networks:
+  chitfund-network:
+    driver: bridge
