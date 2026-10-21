@@ -5,10 +5,7 @@ import Button from "../components/common/Button";
 import BidList from "../components/bid/BidList";
 import BidForm from "../components/bid/BidForm";
 
-import {
-  getBids,
-  deleteBid,
-} from "../services/bidService";
+import { getBids, deleteBid } from "../services/bidService";
 
 export default function Bids() {
   const [bids, setBids] = useState([]);
@@ -21,11 +18,14 @@ export default function Bids() {
   }, []);
 
   const fetchBids = async () => {
+    setLoading(true);
     try {
       const res = await getBids();
       setBids(res.data.data || res.data);
-    } catch {
-      toast.error("Failed to load bids");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to load bids");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,19 +43,11 @@ export default function Bids() {
 
   return (
     <div className="p-6">
-
       <div className="flex items-center justify-between mb-5">
-
         <div>
+          <h2 className="text-2xl font-bold">Bid Management</h2>
 
-          <h2 className="text-2xl font-bold">
-            Bid Management
-          </h2>
-
-          <p className="text-gray-500">
-            Manage all auction bids
-          </p>
-
+          <p className="text-gray-500">Manage all auction bids</p>
         </div>
 
         <Button
@@ -66,7 +58,6 @@ export default function Bids() {
         >
           + Add Bid
         </Button>
-
       </div>
 
       <BidList
@@ -85,7 +76,6 @@ export default function Bids() {
         editData={editData}
         onSuccess={fetchBids}
       />
-
     </div>
   );
 }

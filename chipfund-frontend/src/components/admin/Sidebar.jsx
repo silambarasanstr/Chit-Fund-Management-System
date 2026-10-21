@@ -32,7 +32,11 @@ const adminMenus = [
 const memberMenus = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
   { name: "My Groups", icon: Wallet, href: "/admin/my-groups" },
-  { name: "My Installments", icon: CalendarDays, href: "/admin/my-installments" },
+  {
+    name: "My Installments",
+    icon: CalendarDays,
+    href: "/admin/my-installments",
+  },
   { name: "My Payments", icon: CreditCard, href: "/admin/my-payments" },
   { name: "Profile", icon: UserRound, href: "/admin/profile" },
 ];
@@ -57,7 +61,7 @@ export default function Sidebar({ mobileOpen, setMobileOpen, collapsed }) {
       <aside
         className={`fixed lg:sticky top-0 left-0 h-screen shrink-0 bg-slate-950 border-r border-slate-800 text-white transition-all duration-300 z-50 flex flex-col
 
-        ${collapsed ? "lg:w-20" : "lg:w-72"}
+        ${collapsed ? "lg:w-20" : "lg:w-56"}
         w-72
 
         ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
@@ -115,11 +119,8 @@ export default function Sidebar({ mobileOpen, setMobileOpen, collapsed }) {
         </nav>
 
         <div className="p-4 border-t border-slate-800">
-          <p className="text-xs text-slate-400">
-            &copy; 2023 ChitFund. 
-          </p>
+          <p className="text-xs text-slate-400">&copy; 2023 ChitFund.</p>
         </div>
-
       </aside>
     </>
   );

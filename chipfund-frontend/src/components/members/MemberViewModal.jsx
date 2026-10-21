@@ -27,11 +27,7 @@ const MemberViewModal = ({ isOpen, onClose, member }) => {
   ];
 
   return (
-    <Modal
-      title="Member Details"
-      isOpen={isOpen}
-      onClose={onClose}
-    >
+    <Modal title="Member Details" isOpen={isOpen} onClose={onClose}>
       <div className="space-y-2">
         {fields.map((field) => (
           <div

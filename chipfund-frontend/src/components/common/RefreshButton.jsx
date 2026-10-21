@@ -1,24 +1,12 @@
 import { RefreshCcw } from "lucide-react";
 import Button from "../../components/common/Button";
 
-const RefreshButton = ({
-  onRefresh,
-  loading = false,
-  className = "",
-  title = "Refresh",
-}) => {
+const RefreshButton = ({ onRefresh, loading = false, title = "Refresh" }) => {
   return (
-    <Button
-  onClick={onRefresh}
-  disabled={loading}
-  title={title}
->
-  <RefreshCcw
-    size={18}
-    className={loading ? "animate-spin" : ""}
-  />
-  <span>{loading ? "Refreshing..." : "Refresh"}</span>
-</Button>
+    <Button onClick={onRefresh} disabled={loading} title={title}>
+      <RefreshCcw size={18} className={loading ? "animate-spin" : ""} />
+      <span>{loading ? "Refreshing..." : "Refresh"}</span>
+    </Button>
   );
 };
 

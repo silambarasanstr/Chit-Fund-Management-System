@@ -36,9 +36,7 @@ const MyGroups = () => {
 
   if (loading) {
     return (
-      <div className="p-10 text-center text-gray-500">
-        Loading groups...
-      </div>
+      <div className="p-10 text-center text-gray-500">Loading groups...</div>
     );
   }
 
@@ -53,10 +51,7 @@ const MyGroups = () => {
 
       {profilePending ? (
         <div className="flex flex-col items-center justify-center p-12 bg-white border shadow-sm rounded-xl">
-          <UserRoundCog
-            size={56}
-            className="mb-5 text-orange-500"
-          />
+          <UserRoundCog size={56} className="mb-5 text-orange-500" />
 
           <h2 className="text-2xl font-semibold text-orange-600">
             Member Profile Pending
@@ -67,18 +62,14 @@ const MyGroups = () => {
           </p>
 
           <p className="max-w-2xl mt-2 text-sm leading-6 text-center text-gray-500">
-            Your member profile has not been created yet.
-            Please wait for the administrator to verify your
-            account, create your member profile, and assign
-            you to a chit group.
+            Your member profile has not been created yet. Please wait for the
+            administrator to verify your account, create your member profile,
+            and assign you to a chit group.
           </p>
         </div>
       ) : groups.length === 0 ? (
         <div className="flex flex-col items-center justify-center p-12 bg-white border shadow-sm rounded-xl">
-          <Users
-            size={56}
-            className="mb-5 text-blue-500"
-          />
+          <Users size={56} className="mb-5 text-blue-500" />
 
           <h2 className="text-2xl font-semibold text-blue-600">
             No Groups Assigned
@@ -89,8 +80,7 @@ const MyGroups = () => {
           </p>
 
           <p className="mt-2 text-sm text-center text-gray-500">
-            Please contact the administrator for further
-            assistance.
+            Please contact the administrator for further assistance.
           </p>
         </div>
       ) : (
@@ -108,10 +98,7 @@ const MyGroups = () => {
 
             <tbody>
               {groups.map((item, index) => (
-                <tr
-                  key={item._id}
-                  className="border-t hover:bg-gray-50"
-                >
+                <tr key={item._id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-3">{index + 1}</td>
 
                   <td className="px-4 py-3 font-medium">
@@ -119,17 +106,14 @@ const MyGroups = () => {
                   </td>
 
                   <td className="px-4 py-3">
-                    ₹
-                    {item.chitGroup?.chitAmount?.toLocaleString()}
+                    ₹{item.chitGroup?.chitAmount?.toLocaleString()}
                   </td>
 
                   <td className="px-4 py-3">
                     {item.chitGroup?.duration} Months
                   </td>
 
-                  <td className="px-4 py-3">
-                    {item.member?.name}
-                  </td>
+                  <td className="px-4 py-3">{item.member?.name}</td>
                 </tr>
               ))}
             </tbody>

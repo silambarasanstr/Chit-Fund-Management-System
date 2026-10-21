@@ -63,7 +63,7 @@ export default function Header({ setMobileOpen, collapsed, setCollapsed }) {
           <Menu size={22} />
         </button>
 
-        <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+        <h1 className="font-semibold ">Admin Dashboard</h1>
       </div>
 
       {/* Right */}
@@ -72,10 +72,10 @@ export default function Header({ setMobileOpen, collapsed, setCollapsed }) {
         {/* User */}
 
         <div className="flex items-center gap-2">
-          <UserCircle2 size={34} />
+          <UserCircle2 size={25} />
 
           <div className="hidden sm:block">
-            <p className="font-medium">{capitalizeName(user?.name)} </p>
+            <p className="text-xs font-medium">{capitalizeName(user?.name)} </p>
 
             <p className="text-xs text-gray-500">
               {capitalizeText(user?.role) || "Administrator"}
@@ -86,7 +86,7 @@ export default function Header({ setMobileOpen, collapsed, setCollapsed }) {
         {/* Logout */}
 
         <Button variant={"outline"} size={"sm"} onClick={handleLogout}>
-          <LogOut size={18} />
+          <LogOut size={13} />
           <span className="hidden text-gray-500 md:block">Logout</span>
         </Button>
       </div>

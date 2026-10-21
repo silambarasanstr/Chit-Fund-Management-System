@@ -29,7 +29,6 @@ export const deletePayment = async (id) => {
   return response.data;
 };
 
-
 export const getMyPayments = async () => {
   console.log("Fetching my payments...");
   const response = await api.get("/payments/my-payments");

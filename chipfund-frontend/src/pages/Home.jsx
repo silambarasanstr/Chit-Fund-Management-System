@@ -1,65 +1,40 @@
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  
-console.log(import.meta.env.VITE_API_URL);
   return (
     <>
       {/* Hero Section */}
       <section className="text-white bg-gradient-to-r from-blue-600 to-indigo-700">
-        <div className="container px-5 py-24 mx-auto text-center">
-          <h1 className="text-5xl font-bold">
+        <div className="container px-4 py-10 mx-auto text-center sm:py-12">
+          <h1 className="text-2xl font-bold sm:text-3xl lg:text-4xl">
             Chit Fund Management System
           </h1>
 
-          <p className="max-w-3xl mx-auto mt-6 text-lg text-blue-100">
+          <p className="max-w-2xl mx-auto mt-3 text-sm leading-6 text-blue-100 sm:text-base">
             A secure and easy-to-use platform for managing chit fund groups,
             members, monthly installments, auctions, payments, and reports from
             one centralized dashboard.
           </p>
 
-          <div className="mt-10 space-x-4">
+          <div className="mt-5">
             <Link
               to="/admin"
-              className="px-6 py-3 font-semibold text-blue-700 bg-white rounded-lg hover:bg-gray-100"
+              className="inline-block px-4 py-2 text-sm font-semibold text-blue-700 bg-white rounded-md hover:bg-gray-100"
             >
               Get Started
-            </Link>
-
-            <Link
-              to="/admin"
-              className="px-6 py-3 border border-white rounded-lg hover:bg-white hover:text-blue-700"
-            >
-              Login
             </Link>
           </div>
         </div>
       </section>
 
-      {/* About */}
-      <section className="container px-5 py-16 mx-auto">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-800">
-            About the Project
-          </h2>
-
-          <p className="mt-5 leading-8 text-gray-600">
-            The Chit Fund Management System helps administrators manage chit
-            groups efficiently. It simplifies member registration, installment
-            collection, auctions, payment tracking, and report generation,
-            reducing paperwork and improving transparency.
-          </p>
-        </div>
-      </section>
-
       {/* Features */}
-      <section className="py-16 bg-gray-100">
-        <div className="container px-5 mx-auto">
-          <h2 className="mb-10 text-3xl font-bold text-center text-gray-800">
+      <section className="py-8 bg-gray-100 sm:py-10">
+        <div className="container px-4 mx-auto">
+          <h2 className="mb-5 text-xl font-bold text-center text-gray-800 sm:text-2xl">
             Key Features
           </h2>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
               "Member Management",
               "Chit Group Management",
@@ -70,13 +45,13 @@ console.log(import.meta.env.VITE_API_URL);
             ].map((feature) => (
               <div
                 key={feature}
-                className="p-6 transition bg-white shadow rounded-xl hover:shadow-lg"
+                className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md"
               >
-                <h3 className="mb-2 text-xl font-semibold text-blue-600">
+                <h3 className="mb-1 text-base font-semibold text-blue-600">
                   {feature}
                 </h3>
 
-                <p className="text-gray-600">
+                <p className="text-sm leading-5 text-gray-600">
                   Efficiently manage {feature.toLowerCase()} with an intuitive
                   and user-friendly interface.
                 </p>
@@ -87,55 +62,31 @@ console.log(import.meta.env.VITE_API_URL);
       </section>
 
       {/* How It Works */}
-      <section className="container px-5 py-16 mx-auto">
-        <h2 className="mb-10 text-3xl font-bold text-center text-gray-800">
+      <section className="container px-4 py-8 mx-auto sm:py-10">
+        <h2 className="mb-6 text-xl font-bold text-center text-gray-800 sm:text-2xl">
           How It Works
         </h2>
 
-        <div className="grid gap-8 text-center md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-5 text-center sm:grid-cols-3 md:grid-cols-5">
           {[
             "Create Group",
             "Add Members",
             "Collect Installments",
             "Conduct Auctions",
-            "Generate Reports",
+            "Payment Processing",
           ].map((step, index) => (
             <div key={step}>
-              <div className="flex items-center justify-center w-16 h-16 mx-auto text-2xl font-bold text-white bg-blue-600 rounded-full">
+              <div className="flex items-center justify-center w-10 h-10 mx-auto text-lg font-bold text-white bg-blue-600 rounded-full">
                 {index + 1}
               </div>
 
-              <h3 className="mt-4 font-semibold">{step}</h3>
+              <h3 className="mt-2 text-sm font-semibold text-gray-700">
+                {step}
+              </h3>
             </div>
           ))}
         </div>
       </section>
-
-      {/* Statistics */}
-      <section className="py-16 text-white bg-blue-700">
-        <div className="container grid gap-8 px-5 mx-auto text-center md:grid-cols-4">
-          <div>
-            <h3 className="text-4xl font-bold">500+</h3>
-            <p>Members</p>
-          </div>
-
-          <div>
-            <h3 className="text-4xl font-bold">25+</h3>
-            <p>Chit Groups</p>
-          </div>
-
-          <div>
-            <h3 className="text-4xl font-bold">₹50L+</h3>
-            <p>Monthly Transactions</p>
-          </div>
-
-          <div>
-            <h3 className="text-4xl font-bold">100%</h3>
-            <p>Secure Management</p>
-          </div>
-        </div>
-      </section>
-
     </>
   );
 };

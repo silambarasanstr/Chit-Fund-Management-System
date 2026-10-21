@@ -1,11 +1,7 @@
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Pagination = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-}) => {
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   const pages = [];
@@ -18,14 +14,8 @@ const Pagination = ({
     <div className="flex flex-col gap-4 pt-4 border-gray-200 sm:flex-row sm:items-center sm:justify-between">
       {/* Page Info */}
       <p className="text-sm text-gray-600">
-        Page{" "}
-        <span className="font-semibold text-gray-900">
-          {currentPage}
-        </span>{" "}
-        of{" "}
-        <span className="font-semibold text-gray-900">
-          {totalPages}
-        </span>
+        Page <span className="font-semibold text-gray-900">{currentPage}</span>{" "}
+        of <span className="font-semibold text-gray-900">{totalPages}</span>
       </p>
 
       {/* Pagination */}

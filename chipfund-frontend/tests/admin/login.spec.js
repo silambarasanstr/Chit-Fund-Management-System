@@ -13,7 +13,5 @@ test("Admin login and Admin dashboard loads", async ({ page }) => {
   await expect(page).toHaveURL(/admin/);
 
   // Verify dashboard heading
-  await expect(
-    page.getByRole("heading", { name: /dashboard/i })
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: /dashboard/i })).toBeVisible();
 });

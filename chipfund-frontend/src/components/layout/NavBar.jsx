@@ -16,9 +16,7 @@ const NavBar = () => {
             Home
           </NavLink>
 
-          <NavLink to="/features" className={linkClass}>
-            Features
-          </NavLink>
+          
 
           <NavLink to="/login" className={linkClass}>
             Login

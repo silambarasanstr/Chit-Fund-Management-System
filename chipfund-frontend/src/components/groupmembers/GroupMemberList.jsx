@@ -26,6 +26,7 @@ export default function GroupMemberList({
       toast.success("Deleted Successfully");
       refresh();
     } catch (err) {
+      console.error(err);
       toast.error("Delete Failed");
     }
   };

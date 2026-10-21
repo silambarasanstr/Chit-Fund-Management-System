@@ -8,7 +8,7 @@ const Layout = () => {
     <>
       <Header />
       <NavBar />
-      <main className="p-5 container mx-auto">
+      <main className="container mx-auto mt-10">
         <Outlet />
       </main>
       <Footer />

@@ -10,42 +10,28 @@ export default function PayInstallmentForm({
   if (!installment) return null;
 
   return (
-    <Modal
-      title="Pay Installment"
-      isOpen={isOpen}
-      onClose={onClose}
-    >
+    <Modal title="Pay Installment" isOpen={isOpen} onClose={onClose}>
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3 text-sm">
-
           <div>
             <p className="text-gray-500">Group</p>
-            <p className="font-medium">
-              {installment.group?.groupName}
-            </p>
+            <p className="font-medium">{installment.group?.groupName}</p>
           </div>
 
           <div>
             <p className="text-gray-500">Member</p>
-            <p className="font-medium">
-              {installment.member?.name}
-            </p>
+            <p className="font-medium">{installment.member?.name}</p>
           </div>
 
           <div>
             <p className="text-gray-500">Installment No</p>
-            <p className="font-medium">
-              {installment.installmentNo}
-            </p>
+            <p className="font-medium">{installment.installmentNo}</p>
           </div>
 
           <div>
             <p className="text-gray-500">Due Amount</p>
-            <p className="font-medium text-red-600">
-              ₹{installment.dueAmount}
-            </p>
+            <p className="font-medium text-red-600">₹{installment.dueAmount}</p>
           </div>
-
         </div>
 
         <div className="p-4 text-sm border border-yellow-200 rounded bg-yellow-50">
@@ -53,21 +39,13 @@ export default function PayInstallmentForm({
         </div>
 
         <div className="flex justify-end gap-3">
-
-          <Button
-            variant="secondary"
-            onClick={onClose}
-          >
+          <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>
 
-          <Button
-            variant="success"
-            onClick={onConfirm}
-          >
+          <Button variant="success" onClick={onConfirm}>
             Pay Now
           </Button>
-
         </div>
       </div>
     </Modal>

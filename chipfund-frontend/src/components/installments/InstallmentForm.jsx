@@ -64,6 +64,7 @@ export default function InstallmentForm({
       const res = await getChitGroups();
       setGroups(res.data?.data || res.data || []);
     } catch (error) {
+      console.error(error);
       toast.error("Failed to load groups");
     }
   };

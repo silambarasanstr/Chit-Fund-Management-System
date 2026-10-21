@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import Modal from "../common/Modal";
+
 import Input from "../common/Input";
 import Button from "../common/Button";
 
-import {
-  createBid,
-  updateBid,
-} from "../../services/bidService";
+import { createBid, updateBid } from "../../services/bidService";
 
 import { getAuctions } from "../../services/auctionService";
 import { getMembers } from "../../services/memberService";
@@ -20,12 +18,7 @@ const initialState = {
   remarks: "",
 };
 
-export default function BidForm({
-  isOpen,
-  onClose,
-  editData,
-  onSuccess,
-}) {
+export default function BidForm({ isOpen, onClose, editData, onSuccess }) {
   const [form, setForm] = useState(initialState);
   const [auctions, setAuctions] = useState([]);
   const [members, setMembers] = useState([]);
@@ -43,9 +36,12 @@ export default function BidForm({
     }
   }, [editData]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const fetchData = async () => {
     try {
@@ -61,12 +57,9 @@ export default function BidForm({
     }
   };
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,11 +87,8 @@ export default function BidForm({
       onClose={onClose}
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-
         <div>
-          <label className="block mb-1 text-sm font-medium">
-            Auction
-          </label>
+          <label className="block mb-1 text-sm font-medium">Auction</label>
 
           <select
             name="auction"
@@ -118,9 +108,7 @@ export default function BidForm({
         </div>
 
         <div>
-          <label className="block mb-1 text-sm font-medium">
-            Member
-          </label>
+          <label className="block mb-1 text-sm font-medium">Member</label>
 
           <select
             name="member"
@@ -156,19 +144,11 @@ export default function BidForm({
         />
 
         <div className="flex justify-end gap-2">
-
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={onClose}
-          >
+          <Button type="button" variant="secondary" onClick={onClose}>
             Cancel
           </Button>
 
-          <Button type="submit">
-            {editData ? "Update" : "Save"}
-          </Button>
-
+          <Button type="submit">{editData ? "Update" : "Save"}</Button>
         </div>
       </form>
     </Modal>

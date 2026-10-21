@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 import { createAuction, updateAuction } from "../../services/auctionService";
 import { getChitGroups } from "../../services/chitGroupService";
-import { getInstallments } from "../../services/installmentService";
+
 import { getInstallmentGroupId } from "../../services/installmentService";
 import { getMembersByGroup } from "../../services/groupMemberService";
 
@@ -74,12 +74,7 @@ export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
   const fetchDropdowns = async () => {
     try {
       const groupRes = await getChitGroups();
-
       setGroups(groupRes?.data?.data || groupRes?.data || []);
-
-      // const installmentRes = await getInstallments();
-
-      // setInstallments(installmentRes?.data?.data || installmentRes?.data || []);
     } catch (err) {
       console.error(err);
       toast.error("Failed to load dropdown data");
@@ -199,7 +194,6 @@ export default function AuctionForm({ isOpen, onClose, editData, refresh }) {
               value={form.chitGroup}
               onChange={handleChange}
               required
-              
               options={groups.map((group) => ({
                 value: group._id,
                 label: group.groupName,

@@ -38,7 +38,6 @@ export const getMembersByGroup = async (groupId) => {
   return response.data;
 };
 
-
 export const getGroupsByMember = async (memberId) => {
   const response = await api.get(`/group-members/member/${memberId}`);
 

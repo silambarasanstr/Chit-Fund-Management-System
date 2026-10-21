@@ -49,20 +49,28 @@ export default function GroupMemberForm({
   }, [editData, isOpen]);
 
   const fetchGroups = async () => {
+    setLoading(true);
     try {
       const res = await getChitGroups();
       setGroups(res.data || []);
     } catch (error) {
       toast.error("Failed to load groups");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const fetchMembers = async () => {
+    setLoading(true);
     try {
       const res = await getMembers();
       setMembers(res.data || []);
     } catch (error) {
       toast.error("Failed to load members");
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 

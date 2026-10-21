@@ -45,16 +45,15 @@ export default function Register() {
       toast.success("Registration successful. You can now log in.");
       navigate("/login");
     } catch (error) {
+      console.log(error);
       toast.error("Registration failed. Please try again.");
     }
-   
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen px-4 bg-gradient-to-br from-slate-100 via-white to-blue-100">
-       <div className="w-full max-w-sm p-5 bg-white border border-gray-200 shadow-lg rounded-xl">
-       
-       <div className="mb-5 text-center">
+      <div className="w-full max-w-sm p-5 bg-white border border-gray-200 shadow-lg rounded-xl">
+        <div className="mb-5 text-center">
           <div className="flex items-center justify-center w-12 h-12 mx-auto mb-3 text-xl text-white bg-blue-600 shadow rounded-xl">
             💰
           </div>
@@ -67,7 +66,7 @@ export default function Register() {
             Register for a new account
           </p>
         </div>
-       
+
         <form onSubmit={handleSubmit}>
           <Input
             label="First Name"

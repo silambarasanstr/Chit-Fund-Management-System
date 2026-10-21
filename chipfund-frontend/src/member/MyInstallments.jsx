@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Calendar,
-  CheckCircle,
-  Clock,
-  IndianRupee,
-} from "lucide-react";
+import { Calendar, CheckCircle, Clock, IndianRupee } from "lucide-react";
 import { getMyInstallments } from "../services/installmentService";
 
 const MyInstallments = () => {
@@ -30,13 +25,9 @@ const MyInstallments = () => {
     .filter((i) => i.status === "paid")
     .reduce((sum, i) => sum + (i.paidAmount || 0), 0);
 
-  const pending = installments.filter(
-    (i) => i.status === "pending"
-  ).length;
+  const pending = installments.filter((i) => i.status === "pending").length;
 
-  const paid = installments.filter(
-    (i) => i.status === "paid"
-  ).length;
+  const paid = installments.filter((i) => i.status === "paid").length;
 
   if (loading) {
     return (
@@ -50,9 +41,7 @@ const MyInstallments = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">
-          My Installments
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-800">My Installments</h1>
         <p className="text-sm text-gray-500">
           View your installment payment history.
         </p>
@@ -142,9 +131,7 @@ const MyInstallments = () => {
 
                     <td className="px-4 py-3 text-gray-600">
                       {item.paymentDate
-                        ? new Date(item.paymentDate).toLocaleDateString(
-                            "en-IN"
-                          )
+                        ? new Date(item.paymentDate).toLocaleDateString("en-IN")
                         : "-"}
                     </td>
 
@@ -155,10 +142,7 @@ const MyInstallments = () => {
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan={7}
-                    className="py-12 text-center text-gray-500"
-                  >
+                  <td colSpan={7} className="py-12 text-center text-gray-500">
                     No installments found.
                   </td>
                 </tr>
@@ -176,14 +160,10 @@ const Card = ({ title, value, icon, color }) => (
     <div className="flex items-center justify-between">
       <div>
         <p className="text-sm text-gray-500">{title}</p>
-        <h2 className="mt-2 text-2xl font-bold text-gray-800">
-          {value}
-        </h2>
+        <h2 className="mt-2 text-2xl font-bold text-gray-800">{value}</h2>
       </div>
 
-      <div className={`rounded-lg p-3 ${color}`}>
-        {icon}
-      </div>
+      <div className={`rounded-lg p-3 ${color}`}>{icon}</div>
     </div>
   </div>
 );

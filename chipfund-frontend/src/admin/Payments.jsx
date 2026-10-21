@@ -5,10 +5,7 @@ import Button from "../components/common/Button";
 import PaymentForm from "../components/payments/PaymentForm";
 import PaymentList from "../components/payments/PaymentList";
 
-import {
-  getPayments,
-  deletePayment,
-} from "../services/paymentService";
+import { getPayments, deletePayment } from "../services/paymentService";
 
 export default function Payments() {
   const [payments, setPayments] = useState([]);
@@ -47,7 +44,7 @@ export default function Payments() {
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this payment?"
+      "Are you sure you want to delete this payment?",
     );
 
     if (!confirmDelete) return;
@@ -68,18 +65,12 @@ export default function Payments() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">
-            Payments
-          </h1>
+          <h1 className="text-2xl font-bold text-slate-800">Payments</h1>
 
-          <p className="mt-1 text-sm text-slate-500">
-            Manage payment records.
-          </p>
+          <p className="mt-1 text-sm text-slate-500">Manage payment records.</p>
         </div>
 
-        <Button onClick={handleAdd}>
-          + Add Payment
-        </Button>
+        <Button onClick={handleAdd}>+ Add Payment</Button>
       </div>
 
       {/* Payment Table */}

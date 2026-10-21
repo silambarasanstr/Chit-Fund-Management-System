@@ -16,13 +16,9 @@ const NoDataFound = ({
             strokeWidth={1.5}
           />
 
-          <p className="text-lg font-medium">
-            {title}
-          </p>
+          <p className="text-lg font-medium">{title}</p>
 
-          <p className="text-sm text-gray-400">
-            {message}
-          </p>
+          <p className="text-sm text-gray-400">{message}</p>
         </div>
       </td>
     </tr>

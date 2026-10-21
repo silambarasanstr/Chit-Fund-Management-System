@@ -41,20 +41,12 @@ export default function DataTable({
 
         <tbody>
           {data.map((row, index) => (
-            <tr
-              key={row.id || index}
-              className="border-t hover:bg-gray-50"
-            >
+            <tr key={row.id || index} className="border-t hover:bg-gray-50">
               <td className="px-4 py-3">{index + 1}</td>
 
               {columns.map((column) => (
-                <td
-                  key={column.accessor}
-                  className="px-4 py-3"
-                >
-                  {column.render
-                    ? column.render(row)
-                    : row[column.accessor]}
+                <td key={column.accessor} className="px-4 py-3">
+                  {column.render ? column.render(row) : row[column.accessor]}
                 </td>
               ))}
             </tr>

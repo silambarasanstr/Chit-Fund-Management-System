@@ -1,13 +1,7 @@
-const RowsPerPage = ({
-  value,
-  onChange,
-  options = [5, 10, 20, 50, 100],
-}) => {
+const RowsPerPage = ({ value, onChange, options = [5, 10, 20, 50, 100] }) => {
   return (
     <div className="flex items-center gap-3 pt-4">
-      <span className="text-sm font-medium text-gray-600">
-        Rows
-      </span>
+      <span className="text-sm font-medium text-gray-600">Rows</span>
 
       <select
         value={value}

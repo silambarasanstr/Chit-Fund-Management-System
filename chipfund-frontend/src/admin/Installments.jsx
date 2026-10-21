@@ -71,23 +71,21 @@ export default function Installments() {
   };
 
   const handleConfirmPayment = async () => {
-  if (!selectedInstallment) return;
+    if (!selectedInstallment) return;
 
-  try {
-    await payInstallment(selectedInstallment._id);
+    try {
+      await payInstallment(selectedInstallment._id);
 
-    toast.success("Installment paid successfully");
+      toast.success("Installment paid successfully");
 
-    setIsPayOpen(false);
-    setSelectedInstallment(null);
+      setIsPayOpen(false);
+      setSelectedInstallment(null);
 
-    await fetchInstallments();
-  } catch (error) {
-    toast.error(
-      error.response?.data?.message || "Payment failed"
-    );
-  }
-};
+      await fetchInstallments();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Payment failed");
+    }
+  };
 
   const handleFormClose = () => {
     setIsOpen(false);

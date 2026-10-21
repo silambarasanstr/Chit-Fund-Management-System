@@ -11,8 +11,6 @@ const statusColors = {
 };
 
 const ChitGroupList = ({ groups = [], loading = false, onEdit, onDelete }) => {
-
-
   return (
     <div className="p-5 overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl">
       <div className="overflow-x-auto border rounded-xl">
@@ -57,7 +55,9 @@ const ChitGroupList = ({ groups = [], loading = false, onEdit, onDelete }) => {
               groups.map((group, index) => (
                 <tr key={group._id} className="transition hover:bg-blue-50/40">
                   <td className="px-4 py-3 text-gray-700">0{index + 1}</td>
-                  <td className="px-4 py-3 font-semibold text-gray-800">{group.groupName}</td>
+                  <td className="px-4 py-3 font-semibold text-gray-800">
+                    {group.groupName}
+                  </td>
 
                   <td className="px-4 py-3 text-gray-700">
                     ₹ {group.chitAmount.toLocaleString()}

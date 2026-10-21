@@ -4,7 +4,7 @@ import { getProfile } from "../features/auth/authService";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
-  const [loading, setLoading] =useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchProfile();

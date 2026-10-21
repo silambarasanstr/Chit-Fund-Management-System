@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  CreditCard,
-  IndianRupee,
-  Calendar,
-} from "lucide-react";
+import { CreditCard, IndianRupee, Calendar } from "lucide-react";
 import { getMyPayments } from "../services/paymentService";
 
 const MyPayments = () => {
@@ -25,10 +21,7 @@ const MyPayments = () => {
     }
   };
 
-  const totalPaid = payments.reduce(
-    (sum, item) => sum + (item.amount || 0),
-    0
-  );
+  const totalPaid = payments.reduce((sum, item) => sum + (item.amount || 0), 0);
 
   const lastPayment =
     payments.length > 0 && payments[0].paymentDate
@@ -47,12 +40,8 @@ const MyPayments = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">
-          My Payments
-        </h1>
-        <p className="text-sm text-gray-500">
-          View your payment history.
-        </p>
+        <h1 className="text-2xl font-bold text-gray-800">My Payments</h1>
+        <p className="text-sm text-gray-500">View your payment history.</p>
       </div>
 
       {/* Summary Cards */}
@@ -125,9 +114,9 @@ const MyPayments = () => {
 
                     <td className="px-4 py-3 text-gray-600">
                       {payment.paymentDate
-                        ? new Date(
-                            payment.paymentDate
-                          ).toLocaleDateString("en-IN")
+                        ? new Date(payment.paymentDate).toLocaleDateString(
+                            "en-IN",
+                          )
                         : "-"}
                     </td>
 
@@ -137,8 +126,8 @@ const MyPayments = () => {
                           payment.status === "Completed"
                             ? "bg-green-100 text-green-700"
                             : payment.status === "Pending"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-red-100 text-red-700"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-red-100 text-red-700"
                         }`}
                       >
                         {payment.status}
@@ -152,10 +141,7 @@ const MyPayments = () => {
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan={8}
-                    className="py-12 text-center text-gray-500"
-                  >
+                  <td colSpan={8} className="py-12 text-center text-gray-500">
                     No payment history found.
                   </td>
                 </tr>
@@ -173,14 +159,10 @@ const Card = ({ title, value, icon, color }) => (
     <div className="flex items-center justify-between">
       <div>
         <p className="text-sm text-gray-500">{title}</p>
-        <h2 className="mt-2 text-2xl font-bold text-gray-800">
-          {value}
-        </h2>
+        <h2 className="mt-2 text-2xl font-bold text-gray-800">{value}</h2>
       </div>
 
-      <div className={`p-3 rounded-lg ${color}`}>
-        {icon}
-      </div>
+      <div className={`p-3 rounded-lg ${color}`}>{icon}</div>
     </div>
   </div>
 );

@@ -15,7 +15,7 @@ import StatusFilter from "../components/common/StatusFilter";
 export default function GroupMembers() {
   const [groupMembers, setGroupMembers] = useState([]);
   const [chitGroups, setChitGroups] = useState([]);
-  
+
   const [loading, setLoading] = useState(false);
 
   const [isAddGroupModalOpen, setIsAddGroupModalOpen] = useState(false);
@@ -87,8 +87,8 @@ export default function GroupMembers() {
     label: group.groupName,
   }));
 
-  console.log(groupMembers)
-  console.log(chitGroups)
+  console.log(groupMembers);
+  console.log(chitGroups);
 
   return (
     <div className="p-6">
@@ -107,7 +107,6 @@ export default function GroupMembers() {
               setEditingData(null);
               setIsAddGroupModalOpen(true);
             }}
-            
           >
             + Add Group Member
           </Button>

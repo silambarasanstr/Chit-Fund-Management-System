@@ -19,10 +19,10 @@ export const loginUser = createAsyncThunk(
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Login Failed"
+        error.response?.data?.message || "Login Failed",
       );
     }
-  }
+  },
 );
 
 const authSlice = createSlice({
@@ -55,15 +55,9 @@ const authSlice = createSlice({
         state.user = action.payload.data;
         state.token = action.payload.token;
 
-        localStorage.setItem(
-          "user",
-          JSON.stringify(action.payload.data)
-        );
+        localStorage.setItem("user", JSON.stringify(action.payload.data));
 
-        localStorage.setItem(
-          "token",
-          action.payload.token
-        );
+        localStorage.setItem("token", action.payload.token);
       })
 
       .addCase(loginUser.rejected, (state, action) => {

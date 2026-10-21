@@ -68,7 +68,10 @@ export default function PaymentForm({ editData, isOpen, onClose, onSuccess }) {
       setGroups(groupRes.data || []);
       setInstallments(installmentRes.data || []);
     } catch (err) {
-      toast.error("Failed to load dropdown data");
+      console.error(err);
+      toast.error(
+        err.response?.data?.message || "Failed to load dropdown data",
+      );
     }
   };
 

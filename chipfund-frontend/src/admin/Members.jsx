@@ -125,8 +125,6 @@ const Members = () => {
     toast.success("Members refreshed");
   };
 
-
-  
   return (
     <div className="min-h-screen p-6 bg-slate-100">
       <PageHeader title="Members" subtitle="Manage your members here.">
@@ -167,10 +165,9 @@ const Members = () => {
       <div className="flex items-center justify-between p-2 mb-4 bg-white border rounded-lg shadow-sm">
         <div>
           <div className="flex items-center gap-2">
-            <Users size={15}  />
+            <Users size={15} />
             <span className="text-sm text-gray-500">Total Members</span>
           </div>
-          
         </div>
 
         <div className="flex items-center gap-2 text-right">

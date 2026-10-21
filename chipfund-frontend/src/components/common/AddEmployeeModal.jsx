@@ -16,7 +16,7 @@ const initialForm = {
   },
 };
 
-export default function AddEmployeeModal({ isOpen, onClose, onAddEmployee }) {
+export default function AddEmployeeModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState(initialForm);
   const [loading, setLoading] = useState(false);
 

@@ -10,10 +10,8 @@ test("Member login and Member dashboard loads", async ({ page }) => {
   await page.click("button[type='submit']");
 
   // Verify navigation
-  await expect(page).toHaveURL(/admin/); 
+  await expect(page).toHaveURL(/admin/);
 
   // Verify dashboard heading
-  await expect(
-    page.getByRole("heading", { name: /dashboard/i })
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: /dashboard/i })).toBeVisible();
 });

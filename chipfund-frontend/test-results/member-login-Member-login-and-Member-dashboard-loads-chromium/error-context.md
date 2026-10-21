@@ -31,24 +31,24 @@ Call log:
 - paragraph: Login to your account
 - text: Email
 - textbox "Email":
-  - /placeholder: Enter email
-  - text: member@example.com
+    - /placeholder: Enter email
+    - text: member@example.com
 - text: Password
 - textbox "Password":
-  - /placeholder: Enter password
-  - text: "123456"
+    - /placeholder: Enter password
+    - text: "123456"
 - text: Invalid email or password
 - button "Sign In"
 - paragraph: Quick Login
 - text: Click to autofill
 - button "👨‍💼 Admin admin@example.com USE":
-  - paragraph: 👨‍💼 Admin
-  - paragraph: admin@example.com
-  - text: USE
+    - paragraph: 👨‍💼 Admin
+    - paragraph: admin@example.com
+    - text: USE
 - button "👤 Member member@example.com USE":
-  - paragraph: 👤 Member
-  - paragraph: member@example.com
-  - text: USE
+    - paragraph: 👤 Member
+    - paragraph: member@example.com
+    - text: USE
 - paragraph: © 2026 Chit Fund Management System
 - region "Notifications alt+T"
 ```
@@ -57,20 +57,20 @@ Call log:
 
 ```ts
   1  | import { test, expect } from "@playwright/test";
-  2  | 
+  2  |
   3  | test("Member login and Member dashboard loads", async ({ page }) => {
   4  |   // Login
   5  |   await page.goto("/login");
-  6  | 
+  6  |
   7  |   await page.fill('input[name="email"]', "member@example.com");
   8  |   await page.fill('input[name="password"]', "123456");
-  9  | 
+  9  |
   10 |   await page.click("button[type='submit']");
-  11 | 
+  11 |
   12 |   // Verify navigation
-> 13 |   await expect(page).toHaveURL(/admin/); 
+> 13 |   await expect(page).toHaveURL(/admin/);
      |                      ^ Error: expect(page).toHaveURL(expected) failed
-  14 | 
+  14 |
   15 |   // Verify dashboard heading
   16 |   await expect(
   17 |     page.getByRole("heading", { name: /dashboard/i })
