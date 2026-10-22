@@ -6,7 +6,6 @@ import AdminLayout from "../components/admin/AdminLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
 import Home from "../pages/Home";
-import Features from "../pages/Features";
 
 import Dashboard from "../admin/Dashboard";
 import Members from "../admin/Members";
@@ -31,7 +30,6 @@ const AppRoutes = () => {
         {/* Public Routes */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/features" element={<Features />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

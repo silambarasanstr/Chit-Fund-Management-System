@@ -27,39 +27,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-8 bg-gray-100 sm:py-10">
-        <div className="container px-4 mx-auto">
-          <h2 className="mb-5 text-xl font-bold text-center text-gray-800 sm:text-2xl">
-            Key Features
-          </h2>
-
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              "Member Management",
-              "Chit Group Management",
-              "Installment Collection",
-              "Auction Management",
-              "Payment Tracking",
-              "Reports & Analytics",
-            ].map((feature) => (
-              <div
-                key={feature}
-                className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md"
-              >
-                <h3 className="mb-1 text-base font-semibold text-blue-600">
-                  {feature}
-                </h3>
-
-                <p className="text-sm leading-5 text-gray-600">
-                  Efficiently manage {feature.toLowerCase()} with an intuitive
-                  and user-friendly interface.
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+    
 
       {/* How It Works */}
       <section className="container px-4 py-8 mx-auto sm:py-10">
